@@ -15,9 +15,8 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,system-ui,sans-serif;}
 body{
-  background:radial-gradient(circle at top,#020202,transparent 45%),linear-gradient(#000,#020202);
-  color:#fff;
-  overflow-x:hidden;
+  background:radial-gradient(circle at top,#020229,transparent 45%),linear-gradient(#020202,#000);
+  color:#fff;overflow-x:hidden;
 }
 /* LOADER */
 #loader{
@@ -31,6 +30,7 @@ body{
 #loader img{width:90px;filter:drop-shadow(0 0 30px var(--accent));animation:pulse 1.6s infinite;}
 #loader .bar{margin-top:25px;width:220px;height:6px;background:#111;border-radius:10px;overflow:hidden;}
 #loader .bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:load 2.4s forwards;}
+
 /* NAV */
 header{
   position:fixed;top:0;width:100%;z-index:100;
@@ -43,7 +43,7 @@ header{
   display:flex;align-items:center;justify-content:space-between;
 }
 .logo{display:flex;align-items:center;gap:12px;font-weight:700;}
-.logo img{width:34px}
+.logo img{width:34px;animation:spin 6s linear infinite;}
 nav{position:relative}
 nav a{
   margin:0 16px;color:#aaa;text-decoration:none;
@@ -63,6 +63,7 @@ nav a.active,nav a:hover{color:var(--accent);}
 #adminBtn{
   margin-left:12px;padding:11px 22px;border-radius:14px;font-weight:700;background:var(--accent2);cursor:pointer;color:#fff;border:none;
 }
+
 /* SECTIONS */
 section{
   min-height:100vh;
@@ -71,6 +72,8 @@ section{
   animation:fadeInUp .7s forwards;
 }
 section.active{display:block;}
+
+/* HERO */
 .hero{max-width:1150px;margin:auto;text-align:center;}
 .badge{
   display:inline-block;padding:9px 22px;
@@ -78,13 +81,14 @@ section.active{display:block;}
   border:1px solid rgba(59,130,246,.35);
   border-radius:999px;color:#a5c9ff;
   margin-bottom:28px;font-weight:700;
+  animation:fadeIn .5s ease-in-out;
 }
-.hero h1{font-size:68px;line-height:1.05;}
+.hero h1{font-size:68px;line-height:1.05;animation:slideIn 1s forwards;}
 .hero h1 span{
   background:linear-gradient(90deg,#a5c9ff,var(--accent));
   -webkit-background-clip:text;color:transparent;
 }
-.hero p{max-width:720px;margin:22px auto;font-size:19px;opacity:.9}
+.hero p{max-width:720px;margin:22px auto;font-size:19px;opacity:.9;animation:fadeIn 1s 0.5s forwards;}
 .buttons{margin-top:38px}
 .btn{
   display:inline-block;padding:15px 32px;border-radius:16px;
@@ -93,10 +97,14 @@ section.active{display:block;}
 .btn.primary{
   background:linear-gradient(90deg,var(--accent),var(--accent2));
   color:#fff;box-shadow:0 0 35px rgba(59,130,246,.55);
+  animation:popIn .5s forwards;
 }
 .btn.secondary{
   margin-left:12px;border:1px solid var(--accent);color:#b3d1ff;
+  animation:popIn .5s 0.2s forwards;
 }
+
+/* CARDS */
 .cards{
   margin-top:70px;
   display:grid;
@@ -107,8 +115,14 @@ section.active{display:block;}
   padding:30px;background:var(--panel);
   border:1px solid var(--border);
   border-radius:22px;transition:.3s;
+  animation:fadeInUp .6s forwards;
 }
-.card:hover{transform:translateY(-8px);box-shadow:0 0 40px rgba(59,130,246,.25);}
+.card:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 0 40px rgba(59,130,246,.35);
+}
+
+/* REVIEWS */
 .review{display:flex;gap:16px;align-items:flex-start;}
 .avatar{width:54px;height:54px;border-radius:50%;border:2px solid rgba(255,255,255,.2);object-fit:cover;}
 .review-name{font-weight:700;display:flex;gap:6px;align-items:center;}
@@ -120,40 +134,50 @@ section.active{display:block;}
   background:rgba(59,130,246,.25);
   border:none;padding:6px 14px;border-radius:8px;
   color:#fff;cursor:pointer;
+  transition:.3s;
 }
+.review-btns button:hover{background:rgba(59,130,246,.45);}
+
+/* FAQ */
 .faq-item{
   margin:20px 0;background:var(--panel);
   border:1px solid var(--border);
   border-radius:14px;padding:16px;
   cursor:pointer;
+  transition:.3s;
 }
+.faq-item:hover{background:rgba(59,130,246,.1);}
 .faq-answer{display:none;margin-top:8px;color:#b3d1ff;font-size:15px;}
-#liveReview{position:fixed;left:30px;bottom:30px;background:var(--panel);border:1px solid var(--border);padding:16px 20px;border-radius:16px;display:none;animation:fadeInUp .5s;}
-.discord{
-  position:fixed;right:22px;bottom:22px;padding:14px 22px;background:#5865F2;border-radius:50px;color:#fff;text-decoration:none;font-weight:700;
-}
+
 /* ADMIN MODAL */
 #adminModal{
   position:fixed;top:0;left:0;width:100%;height:100%;
   background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;
-  z-index:9999;
+  z-index:9999;overflow-y:auto;
 }
 #adminContent{
   background:var(--panel);border:1px solid var(--border);
   padding:30px;border-radius:22px;width:90%;max-width:900px;color:#fff;
   display:flex;flex-direction:column;gap:16px;
-  max-height:90vh;overflow-y:auto;
 }
-.reviewAdmin{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--accent);padding:16px;border-radius:16px;}
-.reviewAdmin input, .reviewAdmin textarea, .reviewAdmin select{margin-top:4px;width:100%;border-radius:8px;padding:4px;border:none;}
+.reviewAdmin{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--accent);padding:16px;border-radius:16px;flex-wrap:wrap;}
+.reviewAdmin input, .reviewAdmin textarea, .reviewAdmin select{margin-top:4px;width:100%;border-radius:8px;padding:6px;border:none;}
 .reviewAdmin button{background:var(--accent2);border:none;color:#fff;padding:6px 12px;border-radius:8px;cursor:pointer;margin-left:6px;}
+.admin-close{background:#1e40af;padding:10px 20px;border-radius:12px;cursor:pointer;border:none;align-self:flex-end;}
+
+/* ANIMATIONS */
 @keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
 @keyframes load{to{width:100%}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes popIn{0%{transform:scale(0)}100%{transform:scale(1)}}
+@keyframes slideIn{0%{transform:translateY(50px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+
 <div id="loader"><img src="assets/logo.png"><div class="bar"><span></span></div></div>
 
 <header>
@@ -173,7 +197,9 @@ section.active{display:block;}
 </header>
 
 <section id="home" class="active">
-<div class="hero"><span class="badge">⚡ Extreme Windows Optimization</span><h1>Unleash<br><span>Maximum Performance</span></h1><p>Boost FPS, reduce latency and unlock your PC’s full potential.</p></div>
+<div class="hero"><span class="badge">⚡ Extreme Windows Optimization</span>
+<h1>Unleash<br><span>Maximum Performance</span></h1>
+<p>Boost FPS, reduce latency and unlock your PC’s full potential.</p></div>
 </section>
 
 <section id="features">
@@ -183,16 +209,19 @@ section.active{display:block;}
 <div class="card"><h3>Latency Fix</h3><p>Lower input delay and ping.</p></div>
 <div class="card"><h3>Windows Debloat</h3><p>Frees RAM & CPU instantly.</p></div>
 <div class="card"><h3>Network Optimization</h3><p>Stable & faster connections.</p></div>
-</div></div>
+</div>
+</div>
 </section>
 
 <section id="reviews">
-<div class="hero"><span class="badge">⭐ Reviews (<span id="reviewCount">0</span>)</span><h1>Trusted by<br><span>Streamers / Pros</span></h1>
+<div class="hero"><span class="badge">⭐ Reviews (<span id="reviewCount">0</span>)</span>
+<h1>Trusted by<br><span>Streamers / Pros</span></h1>
 <div class="cards" id="reviewsContainer"></div></div>
 </section>
 
 <section id="about">
-<div class="hero"><span class="badge">ℹ About</span><h1>Why Choose<br><span>szn tweaks</span></h1><p>Safe, tested, and built for competitive players.</p></div>
+<div class="hero"><span class="badge">ℹ About</span><h1>Why Choose<br><span>szn tweaks</span></h1>
+<p>Safe, tested, and built for competitive players.</p></div>
 </section>
 
 <section id="faq">
@@ -202,9 +231,6 @@ section.active{display:block;}
 <div class="faq-item">Is it free?<div class="faq-answer">Yes.</div></div>
 </div>
 </section>
-
-<div id="liveReview"></div>
-<a class="discord" href="https://discord.gg/dr3Zpqpm" target="_blank">Discord</a>
 
 <div id="adminModal"><div id="adminContent"></div></div>
 
@@ -217,7 +243,6 @@ let reviewsData=JSON.parse(localStorage.getItem("reviewsData"))||[
 ];
 
 function saveReviews(){localStorage.setItem("reviewsData",JSON.stringify(reviewsData)); renderReviews();}
-
 function renderReviews(){
   const rc=document.getElementById("reviewsContainer");
   rc.innerHTML="";
@@ -236,8 +261,10 @@ function renderReviews(){
 }
 function likeReview(i){reviewsData[i].likes=reviewsData[i].likes?reviewsData[i].likes+1:1;saveReviews();}
 
+// INIT
 renderReviews();
 
+/* TAB SYSTEM */
 const tabs=[...document.querySelectorAll("[data-tab]")];
 const sections=[...document.querySelectorAll("section")];
 tabs.forEach(t=>t.onclick=()=>{
@@ -247,10 +274,12 @@ tabs.forEach(t=>t.onclick=()=>{
   t.classList.add("active");
 });
 
+/* FAQ TOGGLE */
 document.querySelectorAll(".faq-item").forEach(f=>{
   f.onclick=()=>{const a=f.querySelector(".faq-answer"); a.style.display=a.style.display==="block"?"none":"block";}
 });
 
+/* ADMIN PANEL */
 const adminBtn=document.getElementById("adminBtn");
 const adminModal=document.getElementById("adminModal");
 const adminContent=document.getElementById("adminContent");
@@ -277,7 +306,11 @@ function showAdminPanel(){
     `;
     adminContent.appendChild(div);
   });
-  adminContent.innerHTML+="<button onclick='adminModal.style.display=\"none\"'>Close Admin</button>";
+  const closeBtn=document.createElement("button");
+  closeBtn.innerText="Close Admin";
+  closeBtn.className="admin-close";
+  closeBtn.onclick=()=>{adminModal.style.display="none";}
+  adminContent.appendChild(closeBtn);
 }
 function saveEdit(i){
   const name=document.getElementById(`name${i}`).value;
@@ -294,7 +327,8 @@ function saveEdit(i){
 function updateReview(i,name,text,stars,verified){reviewsData[i]={...reviewsData[i],name,text,stars,verified};saveReviews();}
 function removeReview(i){reviewsData.splice(i,1);saveReviews(); showAdminPanel();}
 
-window.addEventListener("load",()=>{setTimeout(()=>{document.getElementById("loader").style.display="none"},2500);});
+/* LOADER HIDE */
+window.addEventListener("load",()=>{setTimeout(()=>document.getElementById("loader").style.display="none",2500);});
 </script>
 </body>
 </html>
