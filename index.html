@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kayz Tweaks — Extreme Performance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/logo.png">
+
+<style>
+/* ================= ROOT ================= */
+:root{
+  --red:#ef4444;
+  --red2:#dc2626;
+  --bg:#020202;
+  --panel:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.12);
+  --accent:#f87171;
+}
+
+/* ================= RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,system-ui,sans-serif;
+}
+
+body{
+  background:
+    radial-gradient(circle at top,#240404,transparent 45%),
+    linear-gradient(#020202,#000);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* ================= LOADER ================= */
+#loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+#loader img{
+  width:90px;
+  filter:drop-shadow(0 0 30px var(--red));
+  animation:pulse 1.6s infinite;
+}
+#loader .bar{
+  margin-top:25px;
+  width:220px;
+  height:6px;
+  background:#111;
+  border-radius:10px;
+  overflow:hidden;
+}
+#loader .bar span{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--red),var(--red2));
+  animation:load 2.4s forwards;
+}
+@keyframes load{to{width:100%}}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:.7}
+  50%{transform:scale(1.15);opacity:1}
+}
+
+/* ================= NAV ================= */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
+  backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.65);
+  border-bottom:1px solid var(--border);
+}
+.nav{
+  max-width:1250px;
+  margin:auto;
+  padding:18px 30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:700;
+}
+.logo img{width:34px}
+
+nav{position:relative}
+nav a{
+  margin:0 16px;
+  color:#aaa;
+  text-decoration:none;
+  cursor:pointer;
+  transition:.25s;
+}
+nav a.active,nav a:hover{color:var(--red); text-shadow:0 0 8px rgba(239,68,68,.5);}
+.nav-indicator{
+  position:absolute;
+  bottom:-10px;
+  height:3px;
+  background:linear-gradient(90deg,var(--red),var(--red2));
+  border-radius:4px;
+  transition:.35s;
+}
+
+.nav-btn{
+  padding:11px 22px;
+  border-radius:14px;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--red),var(--red2));
+  color:#fff;
+  text-decoration:none;
+  box-shadow:0 0 25px rgba(239,68,68,.45);
+  transition:.3s;
+}
+.nav-btn:hover{transform:translateY(-2px)}
+
+/* ================= SECTIONS ================= */
+section{
+  min-height:100vh;
+  padding:150px 20px 80px;
+  display:none;
+  opacity:0;
+  transform:translateY(35px);
+  transition:all .6s ease;
+}
+section.active{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ================= HERO ================= */
+.hero{
+  max-width:1150px;
+  margin:auto;
+  text-align:center;
+}
+.badge{
+  display:inline-block;
+  padding:9px 22px;
+  background:rgba(239,68,68,.15);
+  border:1px solid rgba(239,68,68,.35);
+  border-radius:999px;
+  color:#ff9a9a;
+  margin-bottom:28px;
+  font-weight:700;
+}
+.hero h1{
+  font-size:68px;
+  line-height:1.05;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,#ff9a9a,var(--red));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.hero p{
+  max-width:720px;
+  margin:22px auto;
+  font-size:19px;
+  opacity:.9;
+}
+
+/* ================= BUTTONS ================= */
+.buttons{margin-top:38px}
+.btn{
+  display:inline-block;
+  padding:15px 32px;
+  border-radius:16px;
+  font-weight:700;
+  text-decoration:none;
+  transition:.25s;
+}
+.btn.primary{
+  background:linear-gradient(90deg,var(--red),var(--red2));
+  color:#fff;
+  box-shadow:0 0 35px rgba(239,68,68,.55);
+}
+.btn.secondary{
+  margin-left:12px;
+  border:1px solid var(--red);
+  color:#ffb3b3;
+}
+.btn:hover{transform:translateY(-4px)}
+
+/* ================= CARDS ================= */
+.cards{
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:26px;
+}
+.card{
+  padding:30px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:22px;
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 40px rgba(239,68,68,.25);
+}
+
+/* ================= REVIEWS ================= */
+.review{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  background:rgba(255,255,255,.03);
+  padding:20px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  transition:.3s;
+}
+.review:hover{transform:translateY(-6px); box-shadow:0 0 30px rgba(239,68,68,.2);}
+.avatar{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.2);
+}
+.review-name{
+  font-weight:700;
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+.verified{
+  width:16px;
+  height:16px;
+  filter:drop-shadow(0 0 4px rgba(239,68,68,.6));
+}
+.review-text{opacity:.9;font-size:15px; margin-top:4px;}
+.stars{color:#facc15;font-size:14px; margin-top:4px;}
+
+/* ================= DISCORD FLOAT ================= */
+.discord{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  padding:14px 22px;
+  background:#5865F2;
+  border-radius:50px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp{
+  from{opacity:0; transform:translateY(25px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <img src="assets/logo.png">
+  <div class="bar"><span></span></div>
+</div>
+
+<audio id="whoosh" src="assets/whoosh.mp3"></audio>
+
+<!-- NAV -->
+<header>
+  <div class="nav">
+    <div class="logo">
+      <img src="assets/logo.png"> Kayz Tweaks
+    </div>
+
+    <nav>
+      <a data-tab="home">Home</a>
+      <a data-tab="features">Features</a>
+      <a data-tab="reviews">Reviews</a>
+      <a data-tab="about">About</a>
+      <a data-tab="faq">FAQ</a>
+      <span class="nav-indicator"></span>
+    </nav>
+
+    <a class="nav-btn" onclick="download()">Download</a>
+  </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="active">
+  <div class="hero">
+    <span class="badge">⚡ Extreme Windows Optimization</span>
+    <h1>Unleash<br><span>Maximum Performance</span></h1>
+    <p>Boost FPS, reduce latency and unlock your PC’s full potential.</p>
+    <div class="buttons">
+      <a class="btn primary" onclick="download()">Download</a>
+      <a class="btn secondary" data-tab="features">View Features</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="hero">
+    <span class="badge">🚀 Features</span>
+    <h1>Built for<br><span>Pure FPS</span></h1>
+    <div class="cards">
+      <div class="card">Advanced FPS Boosting</div>
+      <div class="card">Latency & Input Delay Fix</div>
+      <div class="card">Windows Debloat</div>
+      <div class="card">Network Optimization</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="hero">
+    <span class="badge">⭐ Reviews</span>
+    <h1>Trusted by<br><span>Streamers / Pros</span></h1>
+    <div class="cards">
+      <div class="card review">
+        <img src="assets/review1.png" class="avatar">
+        <div>
+          <div class="review-name">freeze <img src="assets/tick.png" class="verified"></div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="review-text">Best tweaking tool I’ve ever used. Massive FPS boost.</div>
+        </div>
+      </div>
+      <div class="card review">
+        <img src="assets/review4.png" class="avatar">
+        <div>
+          <div class="review-name">max <img src="assets/tick.png" class="verified"></div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="review-text">No glaze but went from 240 FPS to 360.</div>
+        </div>
+      </div>
+      <div class="card review">
+        <img src="assets/review2.png" class="avatar">
+        <div>
+          <div class="review-name">jay <img src="assets/tick.png" class="verified"></div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="review-text">Went from 200 processes to 65 instantly.</div>
+        </div>
+      </div>
+      <div class="card review">
+        <img src="assets/review3.png" class="avatar">
+        <div>
+          <div class="review-name">manman <img src="assets/tick.png" class="verified"></div>
+          <div class="stars">⭐⭐⭐⭐⭐</div>
+          <div class="review-text">Zero input delay now. Fortnite feels insanely smooth.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="hero">
+    <span class="badge">ℹ About</span>
+    <h1>Why Choose<br><span>Kayz Tweaks</span></h1>
+    <p>Safe, tested, and designed for competitive players.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="hero">
+    <span class="badge">❓ FAQ</span>
+    <h1>Frequently Asked<br><span>Questions</span></h1>
+    <p>Windows 10 / 11 • Safe • Free</p>
+  </div>
+</section>
+
+<a class="discord" href="https://discord.gg/dr3Zpqpm" target="_blank">Discord</a>
+
+<script>
+const DOWNLOAD_LINK="YOUR_DOWNLOAD_LINK";
+const tabs=[...document.querySelectorAll("[data-tab]")];
+const sections=[...document.querySelectorAll("section")];
+const indicator=document.querySelector(".nav-indicator");
+const whoosh=document.getElementById("whoosh");
+
+/* LOADER */
+window.addEventListener("load",()=>setTimeout(()=>loader.style.display="none",2500));
+
+function switchTab(id){
+  sections.forEach(s=>s.classList.toggle("active",s.id===id));
+  tabs.forEach(t=>t.classList.toggle("active",t.dataset.tab===id));
+  moveIndicator();
+  history.replaceState(null,"","#"+id);
+  if(whoosh){whoosh.currentTime=0;whoosh.volume=.35;whoosh.play().catch(()=>{});}
+}
+
+function moveIndicator(){
+  const a=document.querySelector("nav a.active");
+  if(!a) return;
+  indicator.style.width=a.offsetWidth+"px";
+  indicator.style.left=a.offsetLeft+"px";
+}
+
+tabs.forEach(t=>t.addEventListener("click",()=>switchTab(t.dataset.tab)));
+document.querySelectorAll("[data-tab]").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
+
+switchTab(location.hash.replace("#","")||"home");
+
+function download(){location.href=DOWNLOAD_LINK;}
+</script>
+
+</body>
+</html>
