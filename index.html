@@ -2,299 +2,369 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SZN Tweaks</title>
+<title>szn tweaks — Extreme Performance</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="assets/logo.png">
 
 <style>
+/* ================= ROOT ================= */
 :root{
-  --bg:#0b0b14;
-  --panel:#111122;
-  --accent:#5865f2;
-  --text:#e5e7eb;
-  --muted:#9ca3af;
-  --card:#16162a;
+  --accent:#3b82f6;
+  --accent2:#2563eb;
+  --bg:#020202;
+  --panel:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.12);
 }
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,system-ui,sans-serif;}
+body{background:radial-gradient(circle at top,#240404,transparent 45%),linear-gradient(#020202,#000);color:#fff;overflow-x:hidden;}
 
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui}
-
-body{
-  background:linear-gradient(120deg,#0b0b14,#0f1025);
-  color:var(--text);
+/* ================= LOADER ================= */
+#loader{
+  position:fixed;inset:0;background:#000;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:9999;
+  animation:fadeOut 1s forwards;
+  animation-delay:2.5s;
 }
+#loader img{width:90px;filter:drop-shadow(0 0 30px var(--accent));animation:pulse 1.6s infinite;}
+#loader .bar{margin-top:25px;width:220px;height:6px;background:#111;border-radius:10px;overflow:hidden;}
+#loader .bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:load 2.4s forwards;}
 
-/* NAV */
+/* ================= NAV ================= */
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 30px;
+  position:fixed;top:0;width:100%;z-index:100;
+  backdrop-filter:blur(14px);
+  background:rgba(0,0,0,.65);
+  border-bottom:1px solid var(--border);
 }
-.logo{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  font-weight:700;
+.nav{
+  max-width:1250px;margin:auto;padding:18px 30px;
+  display:flex;align-items:center;justify-content:space-between;
 }
-.logo img{width:32px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:700;}
+.logo img{width:34px}
+nav{position:relative}
 nav a{
-  margin:0 14px;
-  cursor:pointer;
-  color:var(--muted);
-  transition:.2s;
+  margin:0 16px;color:#aaa;text-decoration:none;
+  cursor:pointer;transition:.25s;
 }
-nav a.active,nav a:hover{color:white}
+nav a.active,nav a:hover{color:var(--accent);}
+.nav-indicator{
+  position:absolute;bottom:-10px;height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:4px;transition:.35s;
+}
+.nav-btn{
+  padding:11px 22px;border-radius:14px;
+  font-weight:700;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  color:#fff;text-decoration:none;
+}
 
-/* TABS */
+/* ================= SECTIONS ================= */
 section{
+  min-height:100vh;
+  padding:150px 20px 80px;
   display:none;
-  padding:60px 6vw;
-  animation:fade .4s ease;
+  animation:fadeInUp .7s forwards;
 }
-section.active{display:block}
-@keyframes fade{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1}
-}
+section.active{display:block;}
 
-/* HERO */
-.hero h1{
-  font-size:44px;
-  margin-bottom:10px;
-}
+/* ================= HERO ================= */
+.hero{max-width:1150px;margin:auto;text-align:center;}
 .badge{
-  background:rgba(88,101,242,.15);
-  color:var(--accent);
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:13px;
+  display:inline-block;padding:9px 22px;
+  background:rgba(59,130,246,.15);
+  border:1px solid rgba(59,130,246,.35);
+  border-radius:999px;color:#a5c9ff;
+  margin-bottom:28px;font-weight:700;
+}
+.hero h1{font-size:68px;line-height:1.05;}
+.hero h1 span{
+  background:linear-gradient(90deg,#a5c9ff,var(--accent));
+  -webkit-background-clip:text;color:transparent;
+}
+.hero p{max-width:720px;margin:22px auto;font-size:19px;opacity:.9}
+
+/* ================= BUTTONS ================= */
+.buttons{margin-top:38px}
+.btn{
+  display:inline-block;padding:15px 32px;border-radius:16px;
+  font-weight:700;text-decoration:none;transition:.25s;
+}
+.btn.primary{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  color:#fff;box-shadow:0 0 35px rgba(59,130,246,.55);
+}
+.btn.secondary{
+  margin-left:12px;border:1px solid var(--accent);color:#b3d1ff;
 }
 
-/* REVIEWS */
+/* ================= CARDS ================= */
 .cards{
-  display:flex;
-  gap:20px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-  padding:30px 0;
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:26px;
 }
-.cards::-webkit-scrollbar{display:none}
-
 .card{
-  min-width:320px;
-  background:var(--card);
-  border-radius:16px;
-  padding:18px;
-  box-shadow:0 0 40px rgba(0,0,0,.4);
+  padding:30px;background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:22px;transition:.3s;
 }
-.review{
-  display:flex;
-  gap:14px;
-}
-.avatar{
-  width:48px;height:48px;border-radius:50%
-}
-.review-name{
-  font-weight:600;
-}
-.verified{
-  width:14px;
-  margin-left:4px;
-}
-.stars span{
-  display:inline-block;
-  color:gold;
-  animation:star .4s ease forwards;
-}
-@keyframes star{from{transform:scale(0)}to{scale:1}}
+.card:hover{transform:translateY(-8px);box-shadow:0 0 40px rgba(59,130,246,.25);}
 
-.review-text{
-  margin:6px 0;
-  color:var(--muted);
-}
-.review-btns{
-  display:flex;
-  gap:10px;
-}
+/* ================= REVIEWS ================= */
+.review{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.03);padding:20px;border-radius:20px;border:1px solid var(--border);}
+.avatar{width:54px;height:54px;border-radius:50%;border:2px solid rgba(255,255,255,.2);}
+.review-name{font-weight:700;display:flex;gap:6px;align-items:center;}
+.verified{width:16px}
+.review-text{opacity:.9;font-size:15px;margin-top:4px;}
+.stars{color:#60a5fa;font-size:14px;margin-top:4px;}
+.review-btns{margin-top:8px;display:flex;gap:8px;}
 .review-btns button{
-  background:transparent;
-  border:1px solid #333;
-  color:white;
-  padding:6px 12px;
-  border-radius:8px;
+  background:rgba(59,130,246,.25);
+  border:none;padding:6px 14px;border-radius:8px;
+  color:#fff;cursor:pointer;transition:.25s;
+}
+.review-btns button:hover{background:linear-gradient(90deg,var(--accent),var(--accent2));}
+
+/* ================= MODAL ================= */
+#reviewModal{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);
+  display:none;align-items:center;justify-content:center;
+  z-index:9999;
+}
+#reviewModal .modal-content{
+  background:var(--panel);padding:30px;border-radius:22px;max-width:500px;width:90%;
+}
+#reviewModal label{display:block;margin-top:12px;font-weight:700;}
+#reviewModal input, #reviewModal textarea, #reviewModal select{
+  width:100%;margin-top:6px;padding:10px;border-radius:12px;border:1px solid var(--border);
+  background:rgba(0,0,0,.3);color:#fff;
+}
+#reviewModal button{margin-top:20px;}
+
+/* ================= FAQ ================= */
+.faq-item{
+  margin:20px 0;background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:14px;padding:16px;
   cursor:pointer;
 }
-.counter{
-  margin-top:10px;
-  color:var(--muted);
+.faq-answer{display:none;margin-top:8px;color:#b3d1ff;font-size:15px;}
+
+/* ================= DISCORD ================= */
+.discord{
+  position:fixed;right:22px;bottom:22px;
+  padding:14px 22px;background:#5865F2;
+  border-radius:50px;color:#fff;
+  text-decoration:none;font-weight:700;
 }
 
-/* MODAL */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-.modal.active{display:flex}
-.modal-box{
-  background:var(--panel);
-  padding:25px;
-  border-radius:14px;
-  width:340px;
-}
-.modal-box input,textarea{
-  width:100%;
-  background:#0d0d1d;
-  border:1px solid #222;
-  color:white;
-  padding:10px;
-  margin:8px 0;
-  border-radius:8px;
-}
-.modal-box button{
-  width:100%;
-  margin-top:10px;
-  padding:10px;
-  background:var(--accent);
-  border:none;
-  color:white;
-  border-radius:8px;
-  cursor:pointer;
-}
+/* ================= ANIMATIONS ================= */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+@keyframes load{to{width:100%}}
 </style>
 </head>
 
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+  <img src="assets/logo.png">
+  <div class="bar"><span></span></div>
+</div>
+
+<!-- NAV -->
 <header>
-  <div class="logo">
-    <img src="assets/logo.png"> SZN Tweaks
+  <div class="nav">
+    <div class="logo"><img src="assets/logo.png"> szn tweaks</div>
+    <nav>
+      <a data-tab="home" class="active">Home</a>
+      <a data-tab="features">Features</a>
+      <a data-tab="reviews">Reviews</a>
+      <a data-tab="about">About</a>
+      <a data-tab="faq">FAQ</a>
+      <span class="nav-indicator"></span>
+    </nav>
+    <a class="nav-btn" id="openReviewModal">Submit Review</a>
   </div>
-  <nav>
-    <a class="active" data-tab="home">Home</a>
-    <a data-tab="features">Features</a>
-    <a data-tab="reviews">Reviews</a>
-    <a data-tab="about">About</a>
-    <a data-tab="faq">FAQ</a>
-  </nav>
 </header>
 
+<!-- HOME -->
 <section id="home" class="active">
   <div class="hero">
-    <span class="badge">Extreme Performance</span>
-    <h1>Boost FPS.<br>Kill Input Delay.</h1>
+    <span class="badge">⚡ Extreme Windows Optimization</span>
+    <h1>Unleash<br><span>Maximum Performance</span></h1>
+    <p>Boost FPS, reduce latency and unlock your PC’s full potential.</p>
   </div>
 </section>
 
+<!-- FEATURES -->
 <section id="features">
-  <h1>Features</h1>
-  <p>System tweaks, latency fixes, CPU scheduling, Fortnite configs.</p>
-</section>
-
-<section id="reviews">
-  <span class="badge">⭐ Reviews</span>
-  <h1>Trusted by Pros</h1>
-
-  <div class="counter">
-    <span id="reviewCount">0</span> Reviews • 
-    <span id="verifiedCount">0</span> Verified
+  <div class="hero">
+    <span class="badge">🚀 Features</span>
+    <h1>Built for<br><span>Pure FPS</span></h1>
+    <div class="cards">
+      <div class="card"><h3>Advanced FPS Boosting</h3><p>Higher FPS & smoother gameplay.</p></div>
+      <div class="card"><h3>Latency Fix</h3><p>Lower input delay and ping.</p></div>
+      <div class="card"><h3>Windows Debloat</h3><p>Frees RAM & CPU instantly.</p></div>
+      <div class="card"><h3>Network Optimization</h3><p>Stable & faster connections.</p></div>
+    </div>
   </div>
-
-  <div class="cards" id="reviewsContainer"></div>
-
-  <button onclick="openModal()">Submit Review</button>
 </section>
 
-<section id="about"><h1>About</h1></section>
-<section id="faq"><h1>FAQ</h1></section>
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="hero">
+    <span class="badge">⭐ Reviews (<span id="reviewCount">0</span>)</span>
+    <h1>Trusted by<br><span>Streamers / Pros</span></h1>
+    <div class="cards" id="reviewsContainer"></div>
+  </div>
+</section>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h3>Submit Review</h3>
-    <input id="name" placeholder="Name">
-    <textarea id="text" placeholder="Your review"></textarea>
-    <button onclick="submitReview()">Send</button>
+<!-- ABOUT -->
+<section id="about">
+  <div class="hero">
+    <span class="badge">ℹ About</span>
+    <h1>Why Choose<br><span>szn tweaks</span></h1>
+    <p>Safe, tested, and built for competitive players.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="hero">
+    <span class="badge">❓ FAQ</span>
+    <h1>Frequently Asked<br><span>Questions</span></h1>
+    <div class="faq-item">Is it safe?<div class="faq-answer">Yes, fully tested.</div></div>
+    <div class="faq-item">Windows support?<div class="faq-answer">Windows 10 & 11</div></div>
+    <div class="faq-item">Is it free?<div class="faq-answer">Yes.</div></div>
+  </div>
+</section>
+
+<!-- REVIEW MODAL -->
+<div id="reviewModal">
+  <div class="modal-content">
+    <h2>Submit a Review</h2>
+    <label>Name</label>
+    <input type="text" id="reviewName">
+    <label>Avatar URL (.png/.gif)</label>
+    <input type="text" id="reviewAvatar">
+    <label>Stars</label>
+    <select id="reviewStars">
+      <option value="5">⭐⭐⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="1">⭐</option>
+    </select>
+    <label>Verified?</label>
+    <select id="reviewVerified">
+      <option value="true">Yes</option>
+      <option value="false">No</option>
+    </select>
+    <label>Review Text</label>
+    <textarea id="reviewText" rows="3"></textarea>
+    <button class="btn primary" id="submitReview">Submit Review</button>
   </div>
 </div>
 
+<a class="discord" href="https://discord.gg/dr3Zpqpm" target="_blank">Discord</a>
+
 <script>
-/* ========= REVIEWS ARRAY (ONLY EDIT THIS) ========= */
-const reviews = [
-  {name:"freeze",avatar:"assets/review1.png",text:"Massive FPS boost.",stars:5,verified:true},
-  {name:"max",avatar:"assets/review4.png",text:"240 to 360 FPS.",stars:5,verified:true},
-  {name:"jay",avatar:"assets/review2.png",text:"Processes cut instantly.",stars:5,verified:true},
-  {name:"manman",avatar:"assets/review3.png",text:"Zero delay now.",stars:5,verified:true}
+/* ================= TABS ================= */
+const tabs=[...document.querySelectorAll("[data-tab]")];
+const sections=[...document.querySelectorAll("section")];
+tabs.forEach(t=>{
+  t.onclick=()=>{
+    sections.forEach(s=>s.classList.remove("active"));
+    document.getElementById(t.dataset.tab).classList.add("active");
+    tabs.forEach(a=>a.classList.remove("active"));
+    t.classList.add("active");
+  };
+});
+
+/* ================= FAQ ================= */
+document.querySelectorAll(".faq-item").forEach(f=>{
+  f.onclick=()=>{
+    const a=f.querySelector(".faq-answer");
+    a.style.display=a.style.display==="block"?"none":"block";
+  };
+});
+
+/* ================= REVIEW DATA ================= */
+let reviewsData=JSON.parse(localStorage.getItem("reviewsData")) || [
+  {name:"freeze",avatar:"assets/review1.png",text:"Best tweaking tool I’ve ever used. Massive FPS boost.",stars:5,verified:true,likes:0},
+  {name:"max",avatar:"assets/review4.png",text:"No glaze but went from 240 FPS to 360.",stars:5,verified:true,likes:0},
+  {name:"jay",avatar:"assets/review2.png",text:"Went from 200 processes to 65 instantly.",stars:5,verified:true,likes:0},
+  {name:"manman",avatar:"assets/review3.png",text:"Zero input delay now. Fortnite feels insanely smooth.",stars:5,verified:true,likes:0}
 ];
 
-/* ========= BUILD REVIEWS ========= */
-const container=document.getElementById("reviewsContainer");
-const likes=JSON.parse(localStorage.getItem("likes")||"{}");
-
-reviews.forEach((r,i)=>{
-  const div=document.createElement("div");
-  div.className="card review";
-  div.innerHTML=`
-    <img src="${r.avatar}" class="avatar">
-    <div>
-      <div class="review-name">${r.name}
-        ${r.verified?'<img src="assets/tick.png" class="verified">':''}
+/* ================= RENDER REVIEWS ================= */
+const rc=document.getElementById("reviewsContainer");
+function renderReviews(){
+  rc.innerHTML="";
+  reviewsData.forEach((r,i)=>{
+    const card=document.createElement("div");
+    card.className="card review";
+    card.innerHTML=`
+      <img src="${r.avatar}" class="avatar">
+      <div>
+        <div class="review-name">${r.name}${r.verified?` <img src='assets/tick.png' class='verified'>`:""}</div>
+        <div class="stars">${"⭐".repeat(r.stars)}</div>
+        <div class="review-text">${r.text}</div>
+        <div class="review-btns"><button data-index="${i}" class="likeBtn">Like (${r.likes})</button></div>
       </div>
-      <div class="stars">${"<span>⭐</span>".repeat(r.stars)}</div>
-      <div class="review-text">${r.text}</div>
-      <div class="review-btns">
-        <button onclick="like(${i})">❤️ ${likes[i]||0}</button>
-      </div>
-    </div>`;
-  container.appendChild(div);
-});
-
-/* COUNTERS */
-document.getElementById("reviewCount").textContent=reviews.length;
-document.getElementById("verifiedCount").textContent=reviews.filter(r=>r.verified).length;
-
-/* LIKE SAVE */
-function like(i){
-  likes[i]=(likes[i]||0)+1;
-  localStorage.setItem("likes",JSON.stringify(likes));
-  location.reload();
-}
-
-/* MODAL */
-function openModal(){document.getElementById("modal").classList.add("active")}
-function submitReview(){
-  const name=document.getElementById("name").value;
-  const text=document.getElementById("text").value;
-
-  fetch("YOUR_DISCORD_WEBHOOK_HERE",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({content:`⭐ **${name}**: ${text}`})
+    `;
+    rc.appendChild(card);
   });
-
-  alert("Review sent!");
-  document.getElementById("modal").classList.remove("active");
+  document.getElementById("reviewCount").innerText=reviewsData.length;
+  document.querySelectorAll(".likeBtn").forEach(b=>{
+    b.onclick=()=>{
+      const idx=b.dataset.index;
+      reviewsData[idx].likes++;
+      localStorage.setItem("reviewsData",JSON.stringify(reviewsData));
+      renderReviews();
+    };
+  });
 }
+renderReviews();
 
-/* TABS */
-document.querySelectorAll("nav a").forEach(a=>{
-  a.onclick=()=>{
-    document.querySelectorAll("nav a").forEach(n=>n.classList.remove("active"));
-    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-    a.classList.add("active");
-    document.getElementById(a.dataset.tab).classList.add("active");
-  }
-});
+/* ================= REVIEW MODAL ================= */
+const reviewModal=document.getElementById("reviewModal");
+document.getElementById("openReviewModal").onclick=()=>reviewModal.style.display="flex";
+reviewModal.onclick=e=>{if(e.target===reviewModal) reviewModal.style.display="none";}
+document.getElementById("submitReview").onclick=()=>{
+  const name=document.getElementById("reviewName").value.trim();
+  const avatar=document.getElementById("reviewAvatar").value.trim();
+  const stars=parseInt(document.getElementById("reviewStars").value);
+  const verified=document.getElementById("reviewVerified").value==="true";
+  const text=document.getElementById("reviewText").value.trim();
+  if(!name||!avatar||!text){alert("Fill all fields!"); return;}
+  if(!avatar.match(/\.(png|gif)$/)){alert("Avatar must end with .png or .gif"); return;}
+  reviewsData.push({name,avatar,text,stars,verified,likes:0});
+  localStorage.setItem("reviewsData",JSON.stringify(reviewsData));
+  renderReviews();
+  reviewModal.style.display="none";
+  document.getElementById("reviewName").value="";
+  document.getElementById("reviewAvatar").value="";
+  document.getElementById("reviewText").value="";
+};
 
-/* AUTO SCROLL */
+/* ================= AUTO CAROUSEL ================= */
+let carouselIndex=0;
 setInterval(()=>{
-  container.scrollBy({left:340,behavior:"smooth"});
-  if(container.scrollLeft+container.clientWidth>=container.scrollWidth)
-    container.scrollTo({left:0,behavior:"smooth"});
-},3500);
+  const cards=[...rc.children];
+  if(cards.length>0){
+    cards.forEach(c=>c.style.display="none");
+    cards[carouselIndex].style.display="flex";
+    carouselIndex=(carouselIndex+1)%cards.length;
+  }
+},4000);
 </script>
 
 </body>
