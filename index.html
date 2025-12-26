@@ -71,60 +71,7 @@ body{
 }
 
 /* ================= NAV ================= */
-header{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:100;
-  backdrop-filter:blur(14px);
-  background:rgba(0,0,0,.65);
-  border-bottom:1px solid var(--border);
-}
-.nav{
-  max-width:1250px;
-  margin:auto;
-  padding:18px 30px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  font-weight:700;
-}
-.logo img{width:34px}
-
-nav{position:relative}
-nav a{
-  margin:0 16px;
-  color:#aaa;
-  text-decoration:none;
-  cursor:pointer;
-  transition:.25s;
-}
-nav a.active,nav a:hover{color:var(--red); text-shadow:0 0 8px rgba(239,68,68,.5);}
-.nav-indicator{
-  position:absolute;
-  bottom:-10px;
-  height:3px;
-  background:linear-gradient(90deg,var(--red),var(--red2));
-  border-radius:4px;
-  transition:.35s;
-}
-
-.nav-btn{
-  padding:11px 22px;
-  border-radius:14px;
-  font-weight:700;
-  background:linear-gradient(90deg,var(--red),var(--red2));
-  color:#fff;
-  text-decoration:none;
-  box-shadow:0 0 25px rgba(239,68,68,.45);
-  transition:.3s;
-}
-.nav-btn:hover{transform:translateY(-2px)}
+<header> <div class="nav"> <div class="logo"> <img src="assets/logo.png"><h1><span>szn tweaks</span></h1> </div>
 
 /* ================= SECTIONS ================= */
 section{
