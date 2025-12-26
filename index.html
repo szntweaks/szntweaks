@@ -56,6 +56,10 @@ section.active{display:block;}
 .admin-btn{padding:10px 18px;background:linear-gradient(90deg,var(--accent),var(--accent2));border:none;border-radius:10px;color:#fff;cursor:pointer;margin-top:10px;}
 input, select, textarea{padding:8px 12px;margin-top:6px;margin-bottom:10px;border-radius:8px;border:none;width:100%;}
 h2,h3{margin-bottom:12px;}
+/* OLD ADMIN UI */
+.reviewAdmin{display:flex;flex-direction:column;background:rgba(59,130,246,.05);padding:16px;border:1px solid rgba(59,130,246,.15);border-radius:14px;margin-bottom:14px;}
+.reviewAdmin input, .reviewAdmin textarea{background:rgba(0,0,0,.1);color:#fff;}
+.reviewAdmin button{margin-top:6px;background:var(--accent);color:#fff;padding:6px 12px;border-radius:8px;border:none;cursor:pointer;}
 /* EXTRA ANIMATIONS */
 @keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
@@ -134,16 +138,13 @@ h2,h3{margin-bottom:12px;}
 </div>
 
 <script>
-// REVIEWS DATA
 let reviewsData = JSON.parse(localStorage.getItem("reviewsData")) || [
 {name:"freeze",avatar:"assets/review1.png",text:"Best tweaking tool I’ve ever used. Massive FPS boost.",stars:5,verified:true,likes:0},
 {name:"max",avatar:"assets/review4.png",text:"No glaze but went from 240 FPS to 360.",stars:5,verified:true,likes:0},
 {name:"jay",avatar:"assets/review2.png",text:"Went from 200 processes to 65 instantly.",stars:5,verified:true,likes:0},
 {name:"manman",avatar:"assets/review3.png",text:"Zero input delay now. Fortnite feels insanely smooth.",stars:5,verified:true,likes:0}
 ];
-
 function saveReviews(){localStorage.setItem("reviewsData",JSON.stringify(reviewsData)); renderReviews();}
-
 function renderReviews(){
 const rc=document.getElementById("reviewsContainer");
 rc.innerHTML="";
@@ -160,10 +161,7 @@ rc.innerHTML+=`<div class="card review">
 });
 }
 renderReviews();
-
 function likeReview(i){reviewsData[i].likes=(reviewsData[i].likes||0)+1;saveReviews();}
-
-// TABS
 const tabs=[...document.querySelectorAll("[data-tab]")];
 const sections=[...document.querySelectorAll("section")];
 tabs.forEach(t=>t.onclick=()=>{
@@ -172,11 +170,7 @@ document.getElementById(t.dataset.tab).classList.add("active");
 tabs.forEach(a=>a.classList.remove("active"));
 t.classList.add("active");
 });
-
-// FAQ TOGGLE
 document.querySelectorAll(".faq-item").forEach(f=>f.onclick=()=>{const a=f.querySelector(".faq-answer"); a.style.display=a.style.display==="block"?"none":"block";});
-
-// ADMIN
 const adminBtn=document.getElementById("adminBtn");
 const adminModal=document.getElementById("adminModal");
 const adminContent=document.getElementById("adminContent");
@@ -217,9 +211,7 @@ reader.readAsDataURL(file.files[0]);
 }
 function updateReview(i,name,text,stars,verified){reviewsData[i]={...reviewsData[i],name,text,stars,verified};saveReviews();}
 function removeReview(i){reviewsData.splice(i,1);saveReviews();showAdminPanel();}
-
 window.addEventListener("load",()=>{setTimeout(()=>document.getElementById("loader").style.display="none",2500);});
 </script>
-
 </body>
 </html>
