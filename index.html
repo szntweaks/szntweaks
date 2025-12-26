@@ -7,119 +7,362 @@
 <link rel="icon" href="assets/logo.png">
 
 <style>
-/* ================= ROOT ================= */
+/* =========================================================
+   ROOT VARIABLES
+========================================================= */
 :root{
-  --red:#3b82f6;
-  --red2:#2563eb;
+  --accent:#3b82f6;
+  --accent2:#2563eb;
   --bg:#020202;
   --panel:rgba(255,255,255,.06);
   --border:rgba(255,255,255,.12);
-  --accent:#3b82f6;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,system-ui,sans-serif;}
-body{background:radial-gradient(circle at top,#240404,transparent 45%),linear-gradient(#020202,#000);color:#fff;overflow-x:hidden;}
 
-/* ================= LOADER ================= */
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Segoe UI,system-ui,sans-serif;
+}
+
+body{
+  background:
+    radial-gradient(circle at top,#240404,transparent 45%),
+    linear-gradient(#020202,#000);
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* =========================================================
+   LOADER
+========================================================= */
 #loader{
-  position:fixed; inset:0; background:#000;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center; z-index:9999;
-  animation:fadeOutLoader 1s ease forwards; animation-delay:2.5s;
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  animation:fadeOut 1s forwards;
+  animation-delay:2.5s;
 }
-#loader img{width:90px; filter:drop-shadow(0 0 30px var(--red)); animation:pulse 1.6s infinite;}
-#loader .bar{margin-top:25px; width:220px; height:6px; background:#111; border-radius:10px; overflow:hidden;}
-#loader .bar span{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--red2)); animation:load 2.4s forwards;}
-@keyframes load{to{width:100%}}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
-@keyframes fadeOutLoader{to{opacity:0; visibility:hidden;}}
 
-/* ================= NAV ================= */
+#loader img{
+  width:90px;
+  filter:drop-shadow(0 0 30px var(--accent));
+  animation:pulse 1.6s infinite;
+}
+
+#loader .bar{
+  margin-top:25px;
+  width:220px;
+  height:6px;
+  background:#111;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+#loader .bar span{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  animation:load 2.4s forwards;
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
 header{
-  position:fixed; top:0; width:100%; z-index:100;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
   backdrop-filter:blur(14px);
-  background:rgba(0,0,0,.65); border-bottom:1px solid var(--border);
-  transform:translateY(-100px); animation:slideDown 1s ease forwards; animation-delay:2.7s;
+  background:rgba(0,0,0,.65);
+  border-bottom:1px solid var(--border);
 }
-.nav{max-width:1250px;margin:auto;padding:18px 30px;display:flex;align-items:center;justify-content:space-between;}
-.logo{display:flex;align-items:center;gap:12px;font-weight:700;opacity:0;animation:fadeInUp 1s forwards;animation-delay:3s;}
+
+.nav{
+  max-width:1250px;
+  margin:auto;
+  padding:18px 30px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:700;
+}
+
 .logo img{width:34px}
-nav{position:relative}
-nav a{margin:0 16px;color:#aaa;text-decoration:none;cursor:pointer;transition:.25s;opacity:0;animation:fadeInUp 0.7s forwards;}
-nav a:nth-child(1){animation-delay:3.2s;}nav a:nth-child(2){animation-delay:3.3s;}nav a:nth-child(3){animation-delay:3.4s;}nav a:nth-child(4){animation-delay:3.5s;}nav a:nth-child(5){animation-delay:3.6s;}
-nav a.active,nav a:hover{color:var(--red); text-shadow:0 0 8px rgba(59,130,246,.5);}
-.nav-indicator{position:absolute;bottom:-10px;height:3px;background:linear-gradient(90deg,var(--red),var(--red2));border-radius:4px;transition:.35s;}
-.nav-btn{padding:11px 22px;border-radius:14px;font-weight:700;background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;text-decoration:none;box-shadow:0 0 25px rgba(59,130,246,.45);transition:.3s;opacity:0;animation:fadeInUp 1s forwards;animation-delay:3.7s;}
-.nav-btn:hover{transform:translateY(-2px); cursor: url('assets/cursor.png'), pointer;}
 
-/* ================= SECTIONS ================= */
-section{min-height:100vh;padding:150px 20px 80px;display:none;opacity:0;transform:translateY(35px);transition:all .6s ease;}
-section.active{display:block;opacity:1;transform:translateY(0);animation:fadeInUp 1s ease forwards;}
+nav{
+  position:relative;
+}
 
-/* ================= HERO ================= */
-.hero{max-width:1150px;margin:auto;text-align:center;}
-.badge{display:inline-block;padding:9px 22px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.35);border-radius:999px;color:#a5c9ff;margin-bottom:28px;font-weight:700;opacity:0;animation:fadeInUp 0.7s forwards;}
-.hero h1{font-size:68px;line-height:1.05;opacity:0;animation:fadeInUp 0.7s forwards;animation-delay:0.3s;}
-.hero h1 span{background:linear-gradient(90deg,#a5c9ff,var(--red));-webkit-background-clip:text;color:transparent;}
-.hero p{max-width:720px;margin:22px auto;font-size:19px;opacity:.9;opacity:0;animation:fadeInUp 0.7s forwards;animation-delay:0.5s;}
+nav a{
+  margin:0 16px;
+  color:#aaa;
+  text-decoration:none;
+  cursor:pointer;
+  transition:.25s;
+}
 
-/* ================= BUTTONS ================= */
+nav a.active,
+nav a:hover{
+  color:var(--accent);
+}
+
+.nav-indicator{
+  position:absolute;
+  bottom:-10px;
+  height:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:4px;
+  transition:.35s;
+}
+
+.nav-btn{
+  padding:11px 22px;
+  border-radius:14px;
+  font-weight:700;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  color:#fff;
+  text-decoration:none;
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+section{
+  min-height:100vh;
+  padding:150px 20px 80px;
+  display:none;
+  animation:fadeInUp .8s forwards;
+}
+
+section.active{
+  display:block;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+.hero{
+  max-width:1150px;
+  margin:auto;
+  text-align:center;
+}
+
+.badge{
+  display:inline-block;
+  padding:9px 22px;
+  background:rgba(59,130,246,.15);
+  border:1px solid rgba(59,130,246,.35);
+  border-radius:999px;
+  color:#a5c9ff;
+  margin-bottom:28px;
+  font-weight:700;
+}
+
+.hero h1{
+  font-size:68px;
+  line-height:1.05;
+}
+
+.hero h1 span{
+  background:linear-gradient(90deg,#a5c9ff,var(--accent));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 .buttons{margin-top:38px}
-.btn{display:inline-block;padding:15px 32px;border-radius:16px;font-weight:700;text-decoration:none;transition:.25s;opacity:0;animation:fadeInUp 0.7s forwards;}
-.btn.primary{background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;box-shadow:0 0 35px rgba(59,130,246,.55);animation-delay:0.7s; cursor: url('assets/cursor.png'), pointer;}
-.btn.secondary{margin-left:12px;border:1px solid var(--red);color:#b3d1ff;animation-delay:0.9s;}
-.btn:hover{transform:translateY(-4px);box-shadow:0 0 25px rgba(59,130,246,.35);}
 
-/* ================= CARDS ================= */
-.cards{margin-top:70px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;}
-.card{padding:30px;background:var(--panel);border:1px solid var(--border);border-radius:22px;transition:.3s;opacity:0;transform:translateY(20px);animation:cardFade 0.6s forwards;}
-.card:nth-child(1){animation-delay:1s;} .card:nth-child(2){animation-delay:1.2s;} .card:nth-child(3){animation-delay:1.4s;} .card:nth-child(4){animation-delay:1.6s;}
-.card:hover{transform:translateY(-8px);box-shadow:0 0 40px rgba(59,130,246,.25);}
+.btn{
+  display:inline-block;
+  padding:15px 32px;
+  border-radius:16px;
+  font-weight:700;
+  text-decoration:none;
+  transition:.25s;
+}
 
-/* ================= REVIEWS ================= */
-.review{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.03);padding:20px;border-radius:20px;border:1px solid var(--border);transition:.3s;}
-.review:hover{transform:translateY(-6px); box-shadow:0 0 30px rgba(59,130,246,.2);}
-.avatar{width:54px;height:54px;border-radius:50%;border:2px solid rgba(255,255,255,.2);animation:fadeInUp 0.7s forwards;}
-.review-name{font-weight:700;display:flex;gap:6px;align-items:center;}
-.verified{width:16px;height:16px;filter:drop-shadow(0 0 4px rgba(59,130,246,.6));}
-.review-text{opacity:.9;font-size:15px;margin-top:4px;}
-.stars{color:#60a5fa;font-size:14px;margin-top:4px;}
-.review-btns{margin-top:8px;display:flex;gap:8px;}
-.review-btns button{background:rgba(59,130,246,.25);border:none;padding:6px 14px;border-radius:8px;color:#fff;cursor:pointer;transition:.3s;}
-.review-btns button:hover{background:linear-gradient(90deg,var(--red),var(--red2));}
+.btn.primary{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  color:#fff;
+  box-shadow:0 0 35px rgba(59,130,246,.55);
+}
 
-/* ================= FAQ ================= */
-.faq-item{margin:20px 0;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:.3s;opacity:0;transform:translateY(20px);animation:cardFade 0.6s forwards;}
-.faq-item:hover{box-shadow:0 0 25px rgba(59,130,246,.25);}
-.faq-answer{margin-top:8px;display:none;color:#b3d1ff;font-size:15px;}
+.btn.secondary{
+  margin-left:12px;
+  border:1px solid var(--accent);
+  color:#b3d1ff;
+}
 
-/* ================= DISCORD FLOAT ================= */
-.discord{position:fixed;right:22px;bottom:22px;padding:14px 22px;background:#5865F2;border-radius:50px;color:#fff;text-decoration:none;font-weight:700;transform:translateY(30px);animation:fadeInUp 1s forwards;animation-delay:4s;}
+/* =========================================================
+   CARDS
+========================================================= */
+.cards{
+  margin-top:70px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:26px;
+}
 
-/* ================= ANIMATIONS ================= */
-@keyframes fadeInUp{from{opacity:0; transform:translateY(25px);}to{opacity:1; transform:translateY(0);}}
-@keyframes slideDown{to{transform:translateY(0);} }
-@keyframes cardFade{to{opacity:1; transform:translateY(0);} }
+.card{
+  padding:30px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:22px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 40px rgba(59,130,246,.25);
+}
+
+/* =========================================================
+   REVIEWS
+========================================================= */
+.review{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+}
+
+.avatar{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.2);
+}
+
+.review-name{
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.verified{
+  width:16px;
+  filter:drop-shadow(0 0 4px rgba(59,130,246,.6));
+}
+
+.review-text{
+  opacity:.9;
+  font-size:15px;
+  margin-top:4px;
+}
+
+.stars{
+  color:#60a5fa;
+  font-size:14px;
+  margin-top:4px;
+}
+
+.review-btns{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
+}
+
+.review-btns button{
+  background:rgba(59,130,246,.25);
+  border:none;
+  padding:6px 14px;
+  border-radius:8px;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* =========================================================
+   LIVE REVIEW POPUP
+========================================================= */
+#liveReview{
+  position:fixed;
+  left:30px;
+  bottom:30px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:16px 20px;
+  border-radius:16px;
+  display:none;
+  animation:fadeInUp .5s;
+}
+
+/* =========================================================
+   DISCORD FLOAT
+========================================================= */
+.discord{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  padding:14px 22px;
+  background:#5865F2;
+  border-radius:50px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes fadeOut{
+  to{opacity:0;visibility:hidden}
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:.7}
+  50%{transform:scale(1.15);opacity:1}
+}
+
+@keyframes load{
+  to{width:100%}
+}
 </style>
 </head>
 
 <body>
 
+<!-- ===================================================== -->
 <!-- LOADER -->
+<!-- ===================================================== -->
 <div id="loader">
   <img src="assets/logo.png">
   <div class="bar"><span></span></div>
 </div>
 
-<audio id="whoosh" src="assets/whoosh.mp3"></audio>
-
+<!-- ===================================================== -->
 <!-- NAV -->
+<!-- ===================================================== -->
 <header>
   <div class="nav">
     <div class="logo">
       <img src="assets/logo.png"> szn tweaks
     </div>
     <nav>
-      <a data-tab="home">Home</a>
+      <a data-tab="home" class="active">Home</a>
       <a data-tab="features">Features</a>
       <a data-tab="reviews">Reviews</a>
       <a data-tab="about">About</a>
@@ -130,162 +373,90 @@ section.active{display:block;opacity:1;transform:translateY(0);animation:fadeInU
   </div>
 </header>
 
+<!-- ===================================================== -->
 <!-- HOME -->
+<!-- ===================================================== -->
 <section id="home" class="active">
   <div class="hero">
     <span class="badge">⚡ Extreme Windows Optimization</span>
     <h1>Unleash<br><span>Maximum Performance</span></h1>
-    <p>Boost FPS, reduce latency and unlock your PC’s full potential.</p>
-    <div class="buttons">
-      <a class="btn primary" href="assets/downloads/szntweaks.exe" download>Download Now</a>
-      <a class="btn secondary" data-tab="features">View Features</a>
-      <a class="btn secondary" onclick="alert('Learn more coming soon!')">Learn More</a>
-    </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section id="features">
-  <div class="hero">
-    <span class="badge">🚀 Features</span>
-    <h1>Built for<br><span>Pure FPS</span></h1>
-    <div class="cards">
-      <div class="card">
-        <h3>Advanced FPS Boosting</h3>
-        <p>Optimizes game and system settings automatically to achieve higher FPS, smoother gameplay, and reduced stuttering.</p>
-        <a class="btn secondary" onclick="alert('Boosts FPS by optimizing CPU, GPU, and memory usage for smoother gaming.')">Learn More</a>
-      </div>
-      <div class="card">
-        <h3>Latency & Input Delay Fix</h3>
-        <p>Reduces network latency and input lag by optimizing network settings and prioritizing game traffic for instant responses.</p>
-        <a class="btn secondary" onclick="alert('Minimizes ping and input delay for competitive gameplay.')">Learn More</a>
-      </div>
-      <div class="card">
-        <h3>Windows Debloat</h3>
-        <p>Removes unnecessary background apps and services to free up memory, improve boot time, and increase overall system speed.</p>
-        <a class="btn secondary" onclick="alert('Cleans your Windows system for faster performance.')">Learn More</a>
-      </div>
-      <div class="card">
-        <h3>Network Optimization</h3>
-        <p>Tweaks network protocols, DNS, and bandwidth allocation to provide a faster and more stable online gaming experience.</p>
-        <a class="btn secondary" onclick="alert('Improves network stability and reduces packet loss.')">Learn More</a>
-      </div>
-    </div>
-    <div class="buttons" style="margin-top:50px;">
-      <a class="btn primary" href="assets/downloads/KayzTweaks.exe" download>Download Now</a>
-    </div>
-  </div>
-</section>
-
+<!-- ===================================================== -->
 <!-- REVIEWS -->
+<!-- ===================================================== -->
 <section id="reviews">
   <div class="hero">
-    <span class="badge">⭐ Reviews</span>
+    <span class="badge">⭐ Reviews (<span id="reviewCount">0</span>)</span>
     <h1>Trusted by<br><span>Streamers / Pros</span></h1>
-    <div class="cards">
-      <div class="card review">
-        <img src="assets/review1.png" class="avatar">
-        <div>
-          <div class="review-name">freeze <img src="assets/tick.png" class="verified"></div>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <div class="review-text">Best tweaking tool I’ve ever used. Massive FPS boost.</div>
-          <div class="review-btns">
-            <button>Reply</button><button>Like</button>
-          </div>
-        </div>
-      </div>
-      <div class="card review">
-        <img src="assets/review4.png" class="avatar">
-        <div>
-          <div class="review-name">max <img src="assets/tick.png" class="verified"></div>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <div class="review-text">No glaze but went from 240 FPS to 360.</div>
-          <div class="review-btns">
-            <button>Reply</button><button>Like</button>
-          </div>
-        </div>
-      </div>
-      <div class="card review">
-        <img src="assets/review2.png" class="avatar">
-        <div>
-          <div class="review-name">jay <img src="assets/tick.png" class="verified"></div>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <div class="review-text">Went from 200 processes to 65 instantly.</div>
-          <div class="review-btns">
-            <button>Reply</button><button>Like</button>
-          </div>
-        </div>
-      </div>
-      <div class="card review">
-        <img src="assets/review3.png" class="avatar">
-        <div>
-          <div class="review-name">manman <img src="assets/tick.png" class="verified"></div>
-          <div class="stars">⭐⭐⭐⭐⭐</div>
-          <div class="review-text">Zero input delay now. Fortnite feels insanely smooth.</div>
-          <div class="review-btns">
-            <button>Reply</button><button>Like</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="cards" id="reviewsContainer"></div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="hero">
-    <span class="badge">ℹ About</span>
-    <h1>Why Choose<br><span>szn tweaks</span></h1>
-    <p>Safe, tested, and designed for competitive players.</p>
-    <div class="buttons">
-      <a class="btn primary" href="assets/downloads/KayzTweaks.exe" download>Download Now</a>
-      <a class="btn secondary" onclick="alert('Contact support for help')">Contact Support</a>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="hero">
-    <span class="badge">❓ FAQ</span>
-    <h1>Frequently Asked<br><span>Questions</span></h1>
-    <div class="faq-item">Is it safe to use?<div class="faq-answer">Yes! Fully tested and secure. Used by thousands.</div></div>
-    <div class="faq-item">Which Windows versions are supported?<div class="faq-answer">Windows 10 and 11</div></div>
-    <div class="faq-item">Is it free?<div class="faq-answer">Yes! But you can upgrade to the premium version for £9.99</div></div>
-  </div>
-</section>
+<div id="liveReview"></div>
 
 <a class="discord" href="https://discord.gg/dr3Zpqpm" target="_blank">Discord</a>
 
 <script>
-const tabs=[...document.querySelectorAll("[data-tab]")];
-const sections=[...document.querySelectorAll("section")];
-const indicator=document.querySelector(".nav-indicator");
-const loader=document.getElementById("loader");
-const whoosh=document.getElementById("whoosh");
+/* =========================================================
+   REVIEW DATA (ONLY EDIT THIS)
+========================================================= */
+const reviewsData = [
+  {name:"freeze",avatar:"assets/review1.png",text:"Best tweaking tool I’ve ever used. Massive FPS boost.",stars:5,verified:true},
+  {name:"max",avatar:"assets/review4.png",text:"No glaze but went from 240 FPS to 360.",stars:5,verified:true},
+  {name:"jay",avatar:"assets/review2.png",text:"Went from 200 processes to 65 instantly.",stars:5,verified:true},
+  {name:"manman",avatar:"assets/review3.png",text:"Zero input delay now. Fortnite feels insanely smooth.",stars:5,verified:true}
+];
 
-/* LOADER */
-window.addEventListener("load",()=>{setTimeout(()=>loader.style.display="none",2500);switchTab(location.hash.replace("#","")||"home");});
+/* =========================================================
+   RENDER REVIEWS
+========================================================= */
+const container=document.getElementById("reviewsContainer");
+document.getElementById("reviewCount").innerText=reviewsData.length;
 
-/* TAB SWITCH */
-function switchTab(id){
-  sections.forEach(s=>s.classList.toggle("active",s.id===id));
-  tabs.forEach(t=>t.classList.toggle("active",t.dataset.tab===id));
-  moveIndicator();
-  history.replaceState(null,"","#"+id);
-  if(whoosh){whoosh.currentTime=0;whoosh.volume=.35;whoosh.play().catch(()=>{});}
-}
-function moveIndicator(){
-  const a=document.querySelector("nav a.active"); if(!a) return;
-  indicator.style.width=a.offsetWidth+"px";
-  indicator.style.left=a.offsetLeft+"px";
-}
-tabs.forEach(t=>t.addEventListener("click",()=>switchTab(t.dataset.tab)));
-document.querySelectorAll(".faq-item").forEach(f=>f.addEventListener("click",()=>{const a=f.querySelector(".faq-answer");a.style.display=a.style.display==="block"?"none":"block";}));
-window.addEventListener("resize",moveIndicator);
+reviewsData.forEach(r=>{
+  container.innerHTML+=`
+    <div class="card review">
+      <img src="${r.avatar}" class="avatar">
+      <div>
+        <div class="review-name">
+          ${r.name}
+          ${r.verified?`<img src="assets/tick.png" class="verified">`:""}
+        </div>
+        <div class="stars">${"⭐".repeat(r.stars)}</div>
+        <div class="review-text">${r.text}</div>
+        <div class="review-btns">
+          <button>Like</button>
+        </div>
+      </div>
+    </div>
+  `;
+});
+
+/* =========================================================
+   LIVE REVIEW POPUPS
+========================================================= */
+setInterval(()=>{
+  const r=reviewsData[Math.floor(Math.random()*reviewsData.length)];
+  const box=document.getElementById("liveReview");
+  box.innerHTML=`⭐ <b>${r.name}</b>: ${r.text}`;
+  box.style.display="block";
+  setTimeout(()=>box.style.display="none",3500);
+},7000);
+
+/* =========================================================
+   TAB SYSTEM
+========================================================= */
+document.querySelectorAll("[data-tab]").forEach(tab=>{
+  tab.onclick=()=>{
+    document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(tab.dataset.tab).classList.add("active");
+    document.querySelectorAll("nav a").forEach(a=>a.classList.remove("active"));
+    tab.classList.add("active");
+  };
+});
 </script>
+
 </body>
 </html>
-
-
-
