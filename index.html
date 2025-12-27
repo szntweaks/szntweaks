@@ -2,345 +2,289 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>szn tweaks — Extreme Performance</title>
+<title>SZN Tweaks — Extreme Performance</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="assets/logo.png">
 
 <style>
+/* ================= ROOT ================= */
 :root{
-  --accent:#3b82f6;
-  --accent2:#2563eb;
-  --bg:#020202;
-  --panel:rgba(255,255,255,.06);
-  --border:rgba(255,255,255,.12);
+  --bg:#070b14;
+  --bg2:#0b1224;
+  --blue:#3b82f6;
+  --blue2:#60a5fa;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --card:#0f172a;
+  --border:#1e293b;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,system-ui,sans-serif;}
+
+/* ================= RESET ================= */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
-  background:radial-gradient(circle at top,#020229,transparent 45%),linear-gradient(#020202,#000);
-  color:#fff;overflow-x:hidden;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:radial-gradient(circle at top,var(--bg2),var(--bg));
+  color:var(--text);
+  overflow-x:hidden;
 }
 
-/* LOADER */
-#loader{
-  position:fixed;inset:0;background:#000;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  z-index:9999;
-  animation:fadeOut 1s forwards;
-  animation-delay:2.5s;
-}
-#loader img{width:90px;filter:drop-shadow(0 0 30px var(--accent));animation:pulse 1.6s infinite;}
-#loader .bar{margin-top:25px;width:220px;height:6px;background:#111;border-radius:10px;overflow:hidden;}
-#loader .bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:load 2.4s forwards;}
-
-/* NAV */
+/* ================= HEADER ================= */
 header{
-  position:fixed;top:0;width:100%;z-index:100;
-  backdrop-filter:blur(14px);
-  background:rgba(0,0,0,.65);
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(7,11,20,.85);
+  backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
 }
 .nav{
-  max-width:1250px;margin:auto;padding:18px 30px;
-  display:flex;align-items:center;justify-content:space-between;
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 24px;
 }
-.logo{display:flex;align-items:center;gap:12px;font-weight:700;}
-.logo img{width:34px;animation:spin 6s linear infinite;}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:18px;
+  font-weight:700;
+}
+.logo img{height:34px}
 nav a{
-  margin:0 16px;color:#aaa;text-decoration:none;
-  cursor:pointer;transition:.25s;
+  margin-left:20px;
+  cursor:pointer;
+  font-weight:500;
+  color:var(--muted);
+  position:relative;
+  transition:.25s;
 }
-nav a.active,nav a:hover{color:var(--accent);}
-.nav-btn{
-  padding:11px 22px;border-radius:14px;
-  font-weight:700;background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:#fff;text-decoration:none;
-}
-#adminBtn{
-  margin-left:12px;padding:11px 22px;border-radius:14px;
-  font-weight:700;background:#1e40af;border:none;color:#fff;cursor:pointer;
+nav a:hover,
+nav a.active{color:var(--blue)}
+nav a.active::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-6px;
+  height:2px;
+  background:var(--blue);
+  box-shadow:0 0 10px var(--blue);
 }
 
-/* SECTIONS */
-section{
-  min-height:100vh;
-  padding:150px 20px 80px;
+/* ================= TABS ================= */
+main{
+  max-width:1200px;
+  margin:50px auto;
+  padding:0 24px;
+}
+.tab{
   display:none;
-  animation:fadeInUp .6s forwards;
+  animation:fadeSlide .4s ease;
 }
-section.active{display:block;}
+.tab.active{display:block}
 
-/* HERO */
-.hero{max-width:1150px;margin:auto;text-align:center;}
-.badge{
-  display:inline-block;padding:9px 22px;
-  background:rgba(59,130,246,.15);
-  border:1px solid rgba(59,130,246,.35);
-  border-radius:999px;color:#a5c9ff;
-  margin-bottom:28px;font-weight:700;
+@keyframes fadeSlide{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:none}
 }
-.hero h1{font-size:68px;line-height:1.05;}
-.hero h1 span{
-  background:linear-gradient(90deg,#a5c9ff,var(--accent));
-  -webkit-background-clip:text;color:transparent;
-}
-.hero p{max-width:720px;margin:22px auto;font-size:19px;opacity:.9;}
 
-/* CARDS */
-.cards{
-  margin-top:70px;
+/* ================= HERO ================= */
+.hero{
+  text-align:center;
+  padding:80px 20px;
+}
+.hero h1{
+  font-size:48px;
+  background:linear-gradient(90deg,var(--blue),var(--blue2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero p{
+  margin-top:16px;
+  color:var(--muted);
+  font-size:18px;
+}
+.hero button{
+  margin-top:30px;
+  padding:14px 30px;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  box-shadow:0 0 30px rgba(59,130,246,.4);
+  transition:.25s;
+}
+.hero button:hover{transform:scale(1.05)}
+
+/* ================= CARDS ================= */
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:26px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
 }
 .card{
-  padding:30px;background:var(--panel);
+  background:var(--card);
   border:1px solid var(--border);
-  border-radius:22px;transition:.3s;
+  border-radius:14px;
+  padding:22px;
+  transition:.25s;
 }
 .card:hover{
   transform:translateY(-6px);
-  box-shadow:0 0 40px rgba(59,130,246,.35);
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
 
-/* REVIEWS */
-.review{display:flex;gap:16px;align-items:flex-start;}
-.avatar{
-  width:56px;height:56px;border-radius:50%;
-  border:2px solid rgba(255,255,255,.2);
-  object-fit:cover;
+/* ================= REVIEWS ================= */
+.review{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 }
-.review-name{font-weight:700;display:flex;gap:6px;align-items:center;}
-.verified{width:16px}
-.review-text{opacity:.9;font-size:15px;margin-top:4px;}
-.stars{color:#60a5fa;font-size:14px;margin-top:4px;}
-.review-btns{margin-top:8px;}
-.review-btns button{
-  background:rgba(59,130,246,.25);
-  border:none;padding:6px 14px;border-radius:8px;
-  color:#fff;cursor:pointer;
-}
-.review-btns button:hover{background:rgba(59,130,246,.45);}
-
-/* FAQ */
-.faq-item{
-  margin:20px 0;background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px;padding:16px;
-  cursor:pointer;
-}
-.faq-answer{display:none;margin-top:8px;color:#b3d1ff;}
-
-/* ADMIN PANEL */
-#adminModal{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.9);
-  display:none;
-  align-items:center;justify-content:center;
-  z-index:9999;
-}
-#adminContent{
-  width:95%;max-width:1000px;
-  background:#020617;
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:28px;
-  max-height:90vh;
-  overflow-y:auto;
-}
-.admin-title{
-  font-size:26px;font-weight:800;
-  margin-bottom:18px;color:#93c5fd;
-}
-.reviewAdmin{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
-  display:grid;
-  grid-template-columns:70px 1fr;
-  gap:16px;
-  margin-bottom:16px;
-}
-.reviewAdmin img{
-  width:64px;height:64px;border-radius:50%;
-  object-fit:cover;
-}
-.reviewAdmin label{font-size:13px;opacity:.7;}
-.reviewAdmin input,
-.reviewAdmin textarea{
+.review img{
   width:100%;
-  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  /* THIS IS WHY GIFS WORK */
+  image-rendering:auto;
+}
+
+/* ================= ADMIN ================= */
+.admin{
+  max-width:520px;
+  margin:auto;
+}
+.admin input,
+.admin textarea{
+  width:100%;
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#020617;
+  color:var(--text);
+}
+.admin button{
+  margin-top:16px;
+  width:100%;
+  padding:12px;
   border-radius:10px;
   border:none;
-  background:#020617;
-  color:#fff;
-}
-.reviewAdmin textarea{resize:vertical;min-height:60px;}
-.admin-actions{display:flex;gap:10px;margin-top:8px;}
-.admin-actions button{
-  background:var(--accent2);
-  border:none;padding:8px 14px;
-  border-radius:10px;color:#fff;cursor:pointer;
-}
-.admin-actions .danger{background:#dc2626;}
-.admin-close{
-  margin-top:20px;
-  background:#1e40af;
-  border:none;padding:12px 22px;
-  border-radius:14px;color:#fff;cursor:pointer;
+  cursor:pointer;
+  background:var(--blue);
+  color:white;
+  font-weight:600;
 }
 
-/* ANIMATIONS */
-@keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1}}
-@keyframes fadeOut{to{opacity:0;visibility:hidden}}
-@keyframes pulse{50%{transform:scale(1.15)}}
-@keyframes load{to{width:100%}}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;
+  padding:40px;
+  color:var(--muted);
+  border-top:1px solid var(--border);
+}
 </style>
 </head>
 
 <body>
 
-<div id="loader"><img src="assets/logo.png"><div class="bar"><span></span></div></div>
-
 <header>
-<div class="nav">
-<div class="logo"><img src="assets/logo.png"> szn tweaks</div>
-<nav>
-<a data-tab="home" class="active">Home</a>
-<a data-tab="features">Features</a>
-<a data-tab="reviews">Reviews</a>
-<a data-tab="about">About</a>
-<a data-tab="faq">FAQ</a>
-</nav>
-<a class="nav-btn" href="assets/downloads/szntweaks.exe" download>Download</a>
-<button id="adminBtn">Admin</button>
-</div>
+  <div class="nav">
+    <div class="logo">
+      <img src="assets/logo.png">
+      SZN Tweaks
+    </div>
+    <nav>
+      <a class="active" data-tab="home">Home</a>
+      <a data-tab="features">Features</a>
+      <a data-tab="reviews">Reviews</a>
+      <a data-tab="admin">Admin</a>
+      <a data-tab="faq">FAQ</a>
+    </nav>
+  </div>
 </header>
 
-<section id="home" class="active">
-<div class="hero">
-<span class="badge">⚡ Extreme Windows Optimization</span>
-<h1>Unleash<br><span>Maximum Performance</span></h1>
-<p>Boost FPS, reduce latency and unlock your PC’s full potential.</p>
-</div>
+<main>
+
+<!-- HOME -->
+<section id="home" class="tab active">
+  <div class="hero">
+    <h1>Extreme Performance Tweaks</h1>
+    <p>Boost FPS • Reduce Latency • Clean System • Win More</p>
+    <button>Download Now</button>
+  </div>
 </section>
 
-<section id="features">
-<div class="hero">
-<span class="badge">🚀 Features</span>
-<h1>Built for<br><span>Pure FPS</span></h1>
-<div class="cards">
-<div class="card"><h3>FPS Boost</h3><p>Massive FPS gains.</p></div>
-<div class="card"><h3>Latency Fix</h3><p>Lower input delay.</p></div>
-<div class="card"><h3>Debloat</h3><p>Less background tasks.</p></div>
-<div class="card"><h3>Network</h3><p>Stable connection.</p></div>
-</div>
-</div>
+<!-- FEATURES -->
+<section id="features" class="tab">
+  <div class="grid">
+    <div class="card">FPS Boost Optimisations</div>
+    <div class="card">Network Latency Tweaks</div>
+    <div class="card">Input Delay Reduction</div>
+    <div class="card">Game-Specific Presets</div>
+    <div class="card">Safe Restore Points</div>
+    <div class="card">Clean UI & Logs</div>
+  </div>
 </section>
 
-<section id="reviews">
-<div class="hero">
-<span class="badge">⭐ Reviews (<span id="reviewCount">0</span>)</span>
-<h1>Trusted by<br><span>Players</span></h1>
-<div class="cards" id="reviewsContainer"></div>
-</div>
+<!-- REVIEWS -->
+<section id="reviews" class="tab">
+  <div class="grid">
+    <div class="card review">
+      <strong>★★★★★ insane boost</strong>
+      <img src="assets/reviews/review1.gif">
+    </div>
+    <div class="card review">
+      <strong>★★★★★ actually works</strong>
+      <img src="assets/reviews/review2.gif">
+    </div>
+    <div class="card review">
+      <strong>★★★★★ smooth af</strong>
+      <img src="assets/reviews/review3.gif">
+    </div>
+  </div>
 </section>
 
-<section id="about">
-<div class="hero">
-<span class="badge">ℹ About</span>
-<h1>Why Choose<br><span>szn tweaks</span></h1>
-<p>Safe. Fast. Competitive.</p>
-</div>
+<!-- ADMIN -->
+<section id="admin" class="tab">
+  <div class="card admin">
+    <h2>Admin Panel</h2>
+    <input placeholder="Review Image (.gif)">
+    <textarea rows="4" placeholder="Review Text"></textarea>
+    <button>Add Review</button>
+  </div>
 </section>
 
-<section id="faq">
-<div class="hero">
-<span class="badge">❓ FAQ</span>
-<h1>Questions</h1>
-<div class="faq-item">Is it safe?<div class="faq-answer">Yes.</div></div>
-<div class="faq-item">Windows?<div class="faq-answer">10 & 11.</div></div>
-</div>
+<!-- FAQ -->
+<section id="faq" class="tab">
+  <div class="card">Is it safe? → Yes</div>
+  <div class="card">Can I revert? → Yes</div>
+  <div class="card">Does it boost FPS? → Yes</div>
 </section>
 
-<div id="adminModal"><div id="adminContent"></div></div>
+</main>
+
+<footer>
+© 2025 SZN Tweaks — All Rights Reserved
+</footer>
 
 <script>
-let reviewsData=JSON.parse(localStorage.getItem("reviewsData"))||[
-{name:"freeze",avatar:"assets/review1.png",text:"Massive FPS boost.",stars:5,verified:true},
-{name:"max",avatar:"assets/review4.png",text:"240 → 360 FPS.",stars:5,verified:true}
-];
+/* ================= TAB SYSTEM (ACTUALLY WORKS) ================= */
+const tabs = document.querySelectorAll("nav a");
+const sections = document.querySelectorAll(".tab");
 
-function saveReviews(){localStorage.setItem("reviewsData",JSON.stringify(reviewsData));renderReviews();}
-function renderReviews(){
-const rc=document.getElementById("reviewsContainer");
-rc.innerHTML="";
-reviewCount.innerText=reviewsData.length;
-reviewsData.forEach((r,i)=>{
-rc.innerHTML+=`
-<div class="card review">
-<img src="${r.avatar}" class="avatar">
-<div>
-<div class="review-name">${r.name}${r.verified?` <img src="assets/tick.png" class="verified">`:""}</div>
-<div class="stars">${"⭐".repeat(r.stars)}</div>
-<div class="review-text">${r.text}</div>
-<div class="review-btns"><button onclick="likeReview(${i})">Like (${r.likes||0})</button></div>
-</div></div>`});
-}
-function likeReview(i){reviewsData[i].likes=(reviewsData[i].likes||0)+1;saveReviews();}
-renderReviews();
+tabs.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    tabs.forEach(b=>b.classList.remove("active"));
+    sections.forEach(s=>s.classList.remove("active"));
 
-/* Tabs */
-document.querySelectorAll("[data-tab]").forEach(t=>{
-t.onclick=()=>{
-document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-document.getElementById(t.dataset.tab).classList.add("active");
-document.querySelectorAll("[data-tab]").forEach(a=>a.classList.remove("active"));
-t.classList.add("active");};});
-
-/* FAQ */
-document.querySelectorAll(".faq-item").forEach(f=>{
-f.onclick=()=>{const a=f.querySelector(".faq-answer");a.style.display=a.style.display==="block"?"none":"block";}
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
 });
-
-/* ADMIN */
-adminBtn.onclick=()=>{
-if(prompt("Admin password")!=="300")return;
-adminModal.style.display="flex";
-adminContent.innerHTML=`<div class="admin-title">Review Manager</div>`;
-reviewsData.forEach((r,i)=>{
-adminContent.innerHTML+=`
-<div class="reviewAdmin">
-<img src="${r.avatar}">
-<div>
-<label>Name</label><input id="n${i}" value="${r.name}">
-<label>Review</label><textarea id="t${i}">${r.text}</textarea>
-<label>Stars</label><input type="number" min="1" max="5" id="s${i}" value="${r.stars}">
-<label><input type="checkbox" id="v${i}" ${r.verified?"checked":""}> Verified</label>
-<input type="file" accept=".png,.gif" id="f${i}">
-<div class="admin-actions">
-<button onclick="saveEdit(${i})">Save</button>
-<button class="danger" onclick="removeReview(${i})">Delete</button>
-</div></div></div>`});
-adminContent.innerHTML+=`<button class="admin-close" onclick="adminModal.style.display='none'">Close</button>`;
-};
-
-function saveEdit(i){
-const f=document.getElementById(`f${i}`);
-const apply=()=>{
-reviewsData[i]={...reviewsData[i],
-name:n${i}.value,text:t${i}.value,stars:+s${i}.value,verified:v${i}.checked};
-saveReviews();};
-if(f.files[0]){
-const r=new FileReader();
-r.onload=e=>{reviewsData[i].avatar=e.target.result;apply();};
-r.readAsDataURL(f.files[0]);
-}else apply();
-}
-function removeReview(i){reviewsData.splice(i,1);saveReviews();adminModal.style.display="none";}
-window.onload=()=>setTimeout(()=>loader.style.display="none",2500);
 </script>
 
 </body>
