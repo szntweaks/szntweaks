@@ -11,17 +11,16 @@
 --accent:#6cf2ff;
 --accent2:#7b7bff;
 --bg:#05070f;
---panel:rgba(255,255,255,.09);
+--panel:rgba(255,255,255,.08);
 --border:rgba(255,255,255,.18);
---radius:28px;
+--radius:26px;
 }
 
-/* RESET */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Segoe UI,system-ui,sans-serif}
 body{
 background:
-radial-gradient(circle at 20% 10%,#0b1a3a,transparent 45%),
-radial-gradient(circle at 80% 90%,#160b3a,transparent 45%),
+radial-gradient(circle at 15% 10%,#0b1a3a,transparent 45%),
+radial-gradient(circle at 85% 90%,#160b3a,transparent 45%),
 linear-gradient(#05070f,#000);
 color:#fff;
 overflow-x:hidden;
@@ -49,7 +48,7 @@ align-items:center;
 justify-content:center;
 z-index:9999;
 animation:fadeOut .8s forwards;
-animation-delay:2.3s;
+animation-delay:2.4s;
 }
 #loader img{
 width:90px;
@@ -83,7 +82,7 @@ justify-content:space-between;
 }
 .logo{display:flex;align-items:center;gap:12px;font-weight:800}
 .logo img{width:36px}
-nav{display:flex;align-items:center;position:relative}
+nav{position:relative;display:flex;align-items:center}
 nav a{
 margin:0 18px;
 color:#aab1ff;
@@ -117,14 +116,6 @@ border:1px solid var(--border);
 background:transparent;
 color:#fff;
 cursor:pointer;
-}
-
-/* MOBILE */
-.menu-btn{display:none;font-size:26px;cursor:pointer}
-@media(max-width:900px){
-nav{display:none}
-nav.open{display:flex;flex-direction:column;position:absolute;top:60px;right:0;background:#000;border-radius:18px;padding:16px}
-.menu-btn{display:block}
 }
 
 /* SECTIONS */
@@ -189,7 +180,51 @@ border-radius:var(--radius);
 padding:32px;
 transition:.4s;
 }
-.card:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(123,123,255,.35)}
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 30px 80px rgba(123,123,255,.35);
+}
+
+/* REVIEWS (RESTORED LAYOUT) */
+.review{
+display:flex;
+gap:16px;
+align-items:flex-start;
+}
+.avatar{
+width:54px;height:54px;
+border-radius:50%;
+border:2px solid rgba(255,255,255,.3);
+object-fit:cover;
+}
+.review-name{
+font-weight:800;
+display:flex;
+align-items:center;
+gap:6px;
+}
+.verified{width:16px}
+.review-text{margin-top:6px;opacity:.9}
+.stars{margin-top:6px;color:#ffd86b}
+.review-img{
+margin-top:12px;
+width:100%;
+border-radius:14px;
+border:1px solid var(--border);
+}
+
+/* PRODUCTS */
+.product-img{
+width:100%;
+border-radius:16px;
+border:1px solid var(--border);
+}
+.price{
+margin-top:10px;
+font-size:20px;
+font-weight:900;
+color:#9effff;
+}
 
 /* FAQ */
 .faq-item{
@@ -243,10 +278,7 @@ gap:14px;
 <header>
 <div class="nav">
 <div class="logo"><img src="assets/logo.png"> szn tweaks</div>
-
-<div class="menu-btn" onclick="nav.classList.toggle('open')">☰</div>
-
-<nav id="nav">
+<nav>
 <a data-tab="home" class="active">Home</a>
 <a data-tab="features">Features</a>
 <a data-tab="reviews">Reviews</a>
@@ -254,7 +286,6 @@ gap:14px;
 <a data-tab="faq">FAQ</a>
 <span class="nav-indicator"></span>
 </nav>
-
 <a class="nav-btn" href="assets/downloads/szntweaks.exe" download>Download</a>
 <button id="adminBtn">Admin</button>
 </div>
@@ -264,7 +295,7 @@ gap:14px;
 <div class="hero">
 <span class="badge">⚡ Extreme Windows Optimization</span>
 <h1>Push Your PC<br><span>Beyond Limits</span></h1>
-<p>Maximum FPS. Lowest latency. Professional-grade tweaks.</p>
+<p>Maximum FPS. Lowest latency. Trusted by thousands.</p>
 
 <div class="stats">
 <div class="stat"><h2 data-count="2500">0</h2><p>Fortnites Optimized</p></div>
@@ -275,12 +306,43 @@ gap:14px;
 </div>
 </section>
 
-<section id="features"><div class="hero"><h1>Features</h1></div></section>
-<section id="reviews"><div class="hero"><h1>Reviews</h1></div></section>
-<section id="products"><div class="hero"><h1>Products</h1></div></section>
-<section id="faq"><div class="hero"><h1>FAQ</h1>
+<section id="features">
+<div class="hero">
+<span class="badge">🚀 Features</span>
+<h1>Pure<br><span>Performance</span></h1>
+<div class="cards">
+<div class="card">Advanced FPS Boosting</div>
+<div class="card">Latency Reduction</div>
+<div class="card">Windows Debloat</div>
+<div class="card">Network Optimization</div>
+</div>
+</div>
+</section>
+
+<section id="reviews">
+<div class="hero">
+<span class="badge">⭐ Reviews</span>
+<h1>Trusted by<br><span>Players</span></h1>
+<div class="cards" id="reviewsContainer"></div>
+</div>
+</section>
+
+<section id="products">
+<div class="hero">
+<span class="badge">🛒 Products</span>
+<h1>Choose Your<br><span>Package</span></h1>
+<div class="cards" id="productsContainer"></div>
+</div>
+</section>
+
+<section id="faq">
+<div class="hero">
+<span class="badge">❓ FAQ</span>
+<h1>Need Help?</h1>
 <div class="faq-item">Is it safe?<div class="faq-answer">Yes, fully safe.</div></div>
-</div></section>
+<div class="faq-item">Windows support?<div class="faq-answer">Windows 10 & 11.</div></div>
+</div>
+</section>
 
 <div id="adminModal"><div id="adminContent"></div></div>
 
@@ -294,21 +356,61 @@ cursor.style.top=e.clientY+"px";
 
 /* COUNTERS */
 document.querySelectorAll("[data-count]").forEach(el=>{
-let end=+el.dataset.count;
+let end=parseFloat(el.dataset.count);
 let cur=0;
 let step=end/80;
 let int=setInterval(()=>{
 cur+=step;
 if(cur>=end){el.innerText=end;clearInterval(int)}
-else el.innerText=Math.floor(cur);
+else el.innerText=end%1?cur.toFixed(1):Math.floor(cur);
 },20);
+});
+
+/* REVIEWS DATA */
+let reviewsData=JSON.parse(localStorage.getItem("reviewsData"))||[
+{name:"freeze",avatar:"assets/review1.gif",text:"Massive FPS boost.",stars:5,verified:true,image:"assets/review_img1.gif"},
+{name:"xeno",avatar:"assets/review2.gif",text:"PC feels brand new.",stars:5,verified:true,image:"assets/review_img2.gif"},
+{name:"lucas",avatar:"assets/review3.gif",text:"Worth every penny.",stars:5,verified:true,image:"assets/review_img3.gif"}
+];
+
+function renderReviews(){
+const rc=document.getElementById("reviewsContainer");
+rc.innerHTML="";
+reviewsData.forEach(r=>{
+rc.innerHTML+=`
+<div class="card review">
+<img src="${r.avatar}" class="avatar">
+<div>
+<div class="review-name">${r.name}${r.verified?'<img src="assets/tick.png" class="verified">':''}</div>
+<div class="stars">${"⭐".repeat(r.stars)}</div>
+<div class="review-text">${r.text}</div>
+${r.image?`<img src="${r.image}" class="review-img">`:``}
+</div>
+</div>`;
+});
+}
+renderReviews();
+
+/* PRODUCTS */
+const products=[
+{name:"SZN Tweaks Free",price:"£0",image:"assets/product1.png"},
+{name:"SZN Tweaks Pro",price:"£9.99",image:"assets/product2.png"},
+{name:"SZN Tweaks Ultimate",price:"£19.99",image:"assets/product3.png"}
+];
+const pc=document.getElementById("productsContainer");
+products.forEach(p=>{
+pc.innerHTML+=`
+<div class="card">
+<img src="${p.image}" class="product-img">
+<h3 style="margin-top:14px">${p.name}</h3>
+<div class="price">${p.price}</div>
+</div>`;
 });
 
 /* TABS */
 const tabs=document.querySelectorAll("[data-tab]");
 const sections=document.querySelectorAll("section");
 const indicator=document.querySelector(".nav-indicator");
-const nav=document.getElementById("nav");
 
 function moveIndicator(el){
 indicator.style.width=el.offsetWidth+"px";
@@ -322,19 +424,47 @@ document.getElementById(t.dataset.tab).classList.add("active");
 tabs.forEach(a=>a.classList.remove("active"));
 t.classList.add("active");
 moveIndicator(t);
-nav.classList.remove("open");
 };
 });
 moveIndicator(document.querySelector("nav a.active"));
 
 /* FAQ */
 document.querySelectorAll(".faq-item").forEach(f=>{
-f.onclick=()=>f.querySelector(".faq-answer").style.display=
-f.querySelector(".faq-answer").style.display==="block"?"none":"block";
+f.onclick=()=>{
+const a=f.querySelector(".faq-answer");
+a.style.display=a.style.display==="block"?"none":"block";
+};
 });
 
+/* ADMIN */
+document.getElementById("adminBtn").onclick=()=>{
+if(prompt("Admin password")!=="300")return;
+document.getElementById("adminModal").style.display="flex";
+const ac=document.getElementById("adminContent");
+ac.innerHTML=`
+<h2>Add Review</h2>
+<input id="n" placeholder="Name">
+<input id="a" placeholder="Avatar (png/gif)">
+<input id="i" placeholder="Review image (png/gif)">
+<textarea id="t" placeholder="Text"></textarea>
+<button onclick="addReview()">Add</button>
+<button onclick="document.getElementById('adminModal').style.display='none'">Close</button>`;
+};
+function addReview(){
+reviewsData.push({
+name:n.value,
+avatar:a.value,
+text:t.value,
+stars:5,
+verified:true,
+image:i.value
+});
+localStorage.setItem("reviewsData",JSON.stringify(reviewsData));
+renderReviews();
+}
+
 /* LOADER */
-window.onload=()=>setTimeout(()=>loader.remove(),2300);
+window.onload=()=>setTimeout(()=>loader.remove(),2400);
 </script>
 
 </body>
