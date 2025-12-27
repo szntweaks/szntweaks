@@ -16,69 +16,109 @@
   --subtext:#aaa;
   --btn-bg:#2b2b2b;
   --btn-hover:#3c3c3c;
+  --shadow:0 10px 30px rgba(108,242,255,.25);
 }
 body{
   margin:0; font-family:Inter,Segoe UI,sans-serif; background:var(--bg); color:var(--text);
+  overflow-x:hidden;
 }
 header{
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 24px; background:#111;
   position:sticky; top:0; z-index:100; border-bottom:1px solid var(--border);
+  backdrop-filter:blur(10px);
 }
-header .logo{font-weight:700; font-size:20px;}
+header .logo{font-weight:700; font-size:22px; color:var(--accent);}
 header nav{display:flex; gap:12px;}
-header nav button{padding:6px 14px; background:var(--btn-bg); border:none; border-radius:6px; color:var(--text); cursor:pointer; transition:.3s;}
-header nav button:hover{background:var(--btn-hover);}
+header nav button{
+  padding:6px 14px; background:var(--btn-bg); border:none; border-radius:8px;
+  color:var(--text); cursor:pointer; transition:.3s;
+  font-weight:500;
+}
+header nav button:hover{background:var(--btn-hover); transform:scale(1.05);}
 
-.main-container{max-width:1200px; margin:50px auto; padding:0 24px;}
-.stats{display:flex; gap:16px; margin-bottom:40px;}
-.stats div{background:#1a1a1a; padding:16px 20px; border-radius:12px; text-align:center; flex:1;}
-.stats div h3{margin:0; color:var(--accent);}
-.stats div p{margin:4px 0 0; color:var(--subtext);}
+.main-container{max-width:1300px; margin:60px auto; padding:0 24px;}
+.stats{display:flex; gap:20px; margin-bottom:50px; justify-content:center;}
+.stats div{
+  background:linear-gradient(135deg,#6cf2ff,#7b7bff); padding:20px 28px; border-radius:16px;
+  text-align:center; color:#000; font-weight:700; transition:.4s;
+}
+.stats div:hover{transform:scale(1.05);}
+.stats div h3{margin:0; font-size:24px;}
+.stats div p{margin:4px 0 0; font-size:14px;}
 
-h1{text-align:center; font-size:36px; margin-bottom:24px;}
-.select-category{display:flex; justify-content:center; margin-bottom:40px;}
-.select-category select{padding:10px 14px; border-radius:8px; border:none; background:#222; color:#fff;}
+h1{text-align:center; font-size:38px; margin-bottom:30px; background:linear-gradient(90deg,#6cf2ff,#7b7bff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation:fadeText 3s infinite alternate;}
+@keyframes fadeText{0%{opacity:0.8;}100%{opacity:1;}}
 
-.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:24px;}
+.select-category{display:flex; justify-content:center; margin-bottom:50px;}
+.select-category select{
+  padding:12px 16px; border-radius:10px; border:none; background:#222; color:#fff;
+  font-size:16px; transition:.3s;
+}
+.select-category select:hover{background:#333; transform:scale(1.03);}
+
+.cards{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px;
+}
 .card{
-  background:var(--card-bg);
-  border-radius:var(--radius);
-  overflow:hidden;
-  border:1px solid var(--border);
-  display:flex; flex-direction:column;
+  background:var(--card-bg); border-radius:var(--radius); overflow:hidden;
+  border:1px solid var(--border); display:flex; flex-direction:column;
+  transition:.4s; cursor:pointer; position:relative;
+}
+.card::before{
+  content:"";
+  position:absolute; inset:0; background:linear-gradient(135deg,#6cf2ff,#7b7bff);
+  opacity:0; transition:.4s; border-radius:var(--radius);
+}
+.card:hover::before{opacity:0.15;}
+.card:hover{transform:translateY(-8px); box-shadow:var(--shadow);}
+.card img{width:100%; height:180px; object-fit:cover; transition:.4s; border-bottom:1px solid var(--border);}
+.card img:hover{transform:scale(1.05);}
+.card-content{padding:18px; flex:1; display:flex; flex-direction:column; justify-content:space-between;}
+.card-content h3{margin-bottom:6px; font-size:20px;}
+.card-content p{margin:0 0 14px; color:var(--subtext);}
+.card-content button{
+  padding:12px; background:var(--accent); border:none; border-radius:10px; color:#000; cursor:pointer; font-weight:700;
   transition:.3s;
 }
-.card:hover{transform:translateY(-6px); box-shadow:0 10px 30px rgba(108,242,255,.25);}
-.card img{width:100%; height:180px; object-fit:cover;}
-.card-content{padding:16px; flex:1; display:flex; flex-direction:column; justify-content:space-between;}
-.card-content h3{margin-bottom:6px;}
-.card-content p{margin:0 0 12px; color:var(--subtext);}
-.card-content button{
-  padding:10px; background:var(--btn-bg); border:none; border-radius:8px; color:#fff; cursor:pointer; transition:.3s;
-}
-.card-content button:hover{background:var(--btn-hover);}
+.card-content button:hover{opacity:.9; transform:scale(1.05);}
 
 /* Modal */
 .modal{
-  position:fixed; inset:0; background:rgba(0,0,0,.85); display:none;
+  position:fixed; inset:0; background:rgba(0,0,0,.95); display:none;
   align-items:center; justify-content:center; z-index:999;
+  animation:modalFade 0.5s ease forwards;
 }
+@keyframes modalFade{from{opacity:0;}to{opacity:1;}}
 .modal-content{
-  background:#111; padding:36px; border-radius:16px; width:90%; max-width:800px; max-height:90vh; overflow:auto;
-  display:flex; flex-direction:column; gap:20px;
-  animation:fadeIn .4s ease;
+  background:#111; padding:36px; border-radius:20px; width:90%; max-width:900px; max-height:90vh; overflow:auto;
+  display:flex; flex-direction:column; gap:24px; animation:scaleIn 0.4s ease;
 }
-@keyframes fadeIn{from{opacity:0;transform:scale(.95);} to{opacity:1; transform:scale(1);}}
+@keyframes scaleIn{from{opacity:0; transform:scale(.95);} to{opacity:1; transform:scale(1);}}
 
-.modal-content h2{text-align:center; margin-bottom:12px;}
-.features{display:grid; grid-template-columns:2fr 1fr; gap:20px;}
-.feature-list{background:#1c1c1c; padding:18px; border-radius:12px; font-size:14px; line-height:1.5; overflow:auto;}
-.keys{display:flex; flex-direction:column; gap:12px;}
-.key{padding:14px; border-radius:10px; border:1px solid var(--border); cursor:pointer; text-align:center;}
-.key.active{background:linear-gradient(135deg,var(--accent),var(--accent2)); font-weight:700; color:#000;}
-.checkout-btn{margin-top:12px; padding:12px; border:none; border-radius:10px; background:var(--accent); color:#000; cursor:pointer; font-weight:700;}
-.checkout-btn:hover{opacity:.9;}
+.modal-content h2{text-align:center; margin-bottom:16px; font-size:28px; background:linear-gradient(90deg,#6cf2ff,#7b7bff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;}
+
+.features{display:grid; grid-template-columns:2fr 1fr; gap:24px;}
+.feature-list{
+  background:#1c1c1c; padding:20px; border-radius:16px; font-size:15px; line-height:1.6; overflow:auto;
+  animation:fadeInLeft 0.5s ease forwards;
+}
+@keyframes fadeInLeft{from{opacity:0; transform:translateX(-20px);} to{opacity:1; transform:translateX(0);}}
+
+.keys{display:flex; flex-direction:column; gap:14px; animation:fadeInRight 0.5s ease forwards;}
+@keyframes fadeInRight{from{opacity:0; transform:translateX(20px);} to{opacity:1; transform:translateX(0);}}
+
+.key{
+  padding:16px; border-radius:12px; border:1px solid var(--border); cursor:pointer; text-align:center;
+  transition:.3s; background:#222; font-weight:500;
+}
+.key.active{background:linear-gradient(135deg,var(--accent),var(--accent2)); font-weight:700; color:#000; box-shadow:0 6px 20px rgba(108,242,255,.4);}
+.checkout-btn{
+  margin-top:14px; padding:14px; border:none; border-radius:12px; background:var(--accent);
+  color:#000; cursor:pointer; font-weight:700; transition:.3s;
+}
+.checkout-btn:hover{opacity:.9; transform:scale(1.05);}
 </style>
 </head>
 <body>
@@ -88,13 +128,15 @@ h1{text-align:center; font-size:36px; margin-bottom:24px;}
   <nav>
     <button>Terms</button>
     <button>Reviews</button>
+    <button>Products</button>
   </nav>
 </header>
 
 <div class="main-container">
   <div class="stats">
-    <div><h3>12,966</h3><p>Products sold</p></div>
-    <div><h3>4.98</h3><p>Average rating</p></div>
+    <div><h3>12,966</h3><p>Products Sold</p></div>
+    <div><h3>4.98</h3><p>Average Rating</p></div>
+    <div><h3>5,432</h3><p>Active Users</p></div>
   </div>
 
   <h1>Our Products</h1>
@@ -105,11 +147,28 @@ h1{text-align:center; font-size:36px; margin-bottom:24px;}
   </div>
 
   <div class="cards">
+    <!-- Example Product Cards -->
     <div class="card">
-      <img src="/mnt/data/7723596d-a19d-4af0-94fb-c249d230d46c.png" alt="Fortnite">
+      <img src="assets/fn.png" alt="Fortnite">
       <div class="card-content">
         <h3>Fortnite Cheats</h3>
         <p>Starting At: US$6.99</p>
+        <button onclick="openModal()">View Products</button>
+      </div>
+    </div>
+    <div class="card">
+      <img src="assets/fn.png" alt="Fortnite">
+      <div class="card-content">
+        <h3>Fortnite Skins</h3>
+        <p>Starting At: US$4.99</p>
+        <button onclick="openModal()">View Products</button>
+      </div>
+    </div>
+    <div class="card">
+      <img src="assets/fn.png" alt="Fortnite">
+      <div class="card-content">
+        <h3>Fortnite Boost</h3>
+        <p>Starting At: US$9.99</p>
         <button onclick="openModal()">View Products</button>
       </div>
     </div>
@@ -123,21 +182,20 @@ h1{text-align:center; font-size:36px; margin-bottom:24px;}
     <div class="features">
       <div class="feature-list">
 🎯 [Aimbot]<br>
-• ✅ Enable Aimbot<br>• ✅ MEMORY AIM<br>• ✅ Enable FOV Arrow<br>• ✅ Aim Prediction<br>• ✅ Aim Randomize Aim<br>• ✅ Skip Knocked Player<br>• ✅ Disable Aim While Building<br>• ✅ Disable Aim While Pickaxe<br>• ✅ Enemy Visibility Check<br>• ✅ Aimbot FOV Size<br>• ✅ Aimbot Smoothness X<br>• ✅ Aimbot Smoothness Y<br>• ✅ Aim Distance<br>• ✅ Aim Key<br>• ✅ Aim Bone<br><br>
-🛡️ [EXPLOITS]<br>
+• ✅ Enable Aimbot<br>• ✅ MEMORY AIM<br>• ✅ FOV Arrow<br>• ✅ Aim Prediction<br>• ✅ Aim Randomize<br>• ✅ Skip Knocked Player<br>• ✅ Disable While Building<br>• ✅ Disable While Pickaxe<br><br>
+🛡️ [Exploits]<br>
 • ✅ NO SPREAD<br>• ✅ SILENT AIM<br>• ✅ MAGIC BULLET<br>• ✅ SPEED HACK<br>• ✅ BULLET TRACERS<br>• ✅ CHAMS<br>• ✅ HITBOX EXPANDER<br><br>
 👀 [Visuals]<br>
-• ✅ Enable Player ESP<br>• ✅ Draw Distance<br>• ✅ Draw Weapon<br>• ✅ Draw Weapon Rarity<br>• ✅ Draw Outline<br>• ✅ Draw Name<br>• ✅ Draw Platform<br>• ✅ Draw Platform Icons<br>• ✅ Draw Kills ESP<br>• ✅ Draw Season Level<br>• ✅ Draw Rank<br>• ✅ Draw Rank Icons<br><br>
-🛡️ [RADAR]<br>
-• ✅ Enable Radar<br>• ✅ Enable Distance<br>• ✅ Enable Local Radar Point<br>• ✅ Radar Position<br>• ✅ Radar Size<br><br>
-🔧 [MISC]<br>
-• ✅ V-Sync<br>• ✅ Stream Proof<br>• ✅ Speed Loop<br>• ✅ Speed LootSpeed<br>• ✅ Save Config<br>• ✅ Load Config<br><br>
-⚙️ [System Information]<br>
-• ✅ Windows 10/11<br>• ✅ Intel or AMD CPU<br>• ✅ Any GPU<br>• ✅ Controller supported<br>• ✅ Tournament Ready
+• ✅ Player ESP<br>• ✅ Weapon ESP<br>• ✅ Name & Platform<br>• ✅ Kill & Rank ESP<br><br>
+🔧 [Misc]<br>
+• ✅ V-Sync<br>• ✅ Stream Proof<br>• ✅ Save/Load Config<br><br>
+⚙️ [System]<br>
+• ✅ Windows 10/11<br>• ✅ Intel/AMD CPU<br>• ✅ Any GPU<br>• ✅ Controller Supported
       </div>
       <div class="keys">
         <div class="key" onclick="selectKey(this,'1 Day','US$6.99')">1 Day — US$6.99</div>
         <div class="key" onclick="selectKey(this,'1 Week','US$14.99')">1 Week — US$14.99</div>
+        <div class="key" onclick="selectKey(this,'1 Month','US$29.99')">1 Month — US$29.99</div>
         <div class="key" onclick="selectKey(this,'Lifetime','US$49.99')">Lifetime — US$49.99</div>
         <button class="checkout-btn" onclick="checkout()">Checkout</button>
       </div>
@@ -154,7 +212,7 @@ function selectKey(el,key,price){
 }
 function checkout(){
   if(!window.selectedKey){alert('Select a key'); return;}
-  alert(`Purchased Fortnite Cheats\nKey: ${window.selectedKey.key}\nPrice: ${window.selectedKey.price}`);
+  alert(`Purchased Fortnite Product\nKey: ${window.selectedKey.key}\nPrice: ${window.selectedKey.price}`);
   document.getElementById('productModal').style.display='none';
 }
 </script>
