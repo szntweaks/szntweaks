@@ -77,12 +77,95 @@ section.active{display:block}
 #productPanel .close-btn:hover{color:var(--accent);}
 
 /* INVOICE */
-#invoiceModal{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:2000;}
-#invoiceContent{background:var(--panel);padding:30px;border-radius:22px;width:90%;max-width:500px;text-align:center;}
-#invoiceContent h2{margin-bottom:20px;}
-#invoiceContent p{margin:8px 0;font-weight:600;}
-#invoiceContent .key{margin-top:15px;font-size:18px;color:var(--success);}
-#invoiceContent button{margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:var(--accent);color:#fff;cursor:pointer;}
+<!-- INVOICE -->
+<div id="invoiceModal">
+  <div id="invoiceContent">
+    <h2>Checkout Summary</h2>
+    <p id="invoiceDetails"></p>
+    <p class="key" id="licenseKey"></p>
+    <button onclick="closeInvoice()">Close</button>
+  </div>
+</div>
+
+<style>
+/* INVOICE MODAL - REWORKED */
+#invoiceModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85); /* Slight dark overlay */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+#invoiceContent {
+  background: #111; /* Solid dark background */
+  padding: 40px 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+#invoiceContent h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: var(--accent);
+}
+
+#invoiceContent p {
+  margin: 12px 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+#invoiceContent .key {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+#invoiceContent button {
+  margin-top: 25px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#invoiceContent button:hover {
+  opacity: 0.85;
+}
+</style>
+
+<script>
+function checkout() {
+  if (!selectedLicense) { alert("Please select a license!"); return; }
+  const qty = document.getElementById('quantityInput').value;
+  const invoice = document.getElementById('invoiceDetails');
+  const keyElem = document.getElementById('licenseKey');
+  
+  document.getElementById('invoiceModal').style.display = 'flex';
+  invoice.innerText = `${qty} x ${selectedLicense}`;
+  keyElem.innerText = 'Generating license key...';
+
+  setTimeout(() => {
+    keyElem.innerText = `License Key: ${generateKey()}`;
+  }, 1500);
+}
+
+function closeInvoice() {
+  document.getElementById('invoiceModal').style.display = 'none';
+}
+</script>
+
 
 /* ANIMATIONS */
 @keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1}}
@@ -211,3 +294,4 @@ window.onload=()=>setTimeout(()=>document.getElementById("loader").remove(),2500
 
 </body>
 </html>
+
