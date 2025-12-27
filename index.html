@@ -7,105 +7,107 @@
 <link rel="icon" href="assets/logo.png">
 
 <style>
-/* ===================== ROOT ===================== */
 :root{
---neon:#7c7cff;
---neon2:#00eaff;
---bg:#05050a;
---panel:rgba(255,255,255,.07);
---border:rgba(255,255,255,.14);
---blur:blur(18px);
---radius:22px;
+--accent:#6cf2ff;
+--accent2:#7b7bff;
+--bg:#05070f;
+--panel:rgba(255,255,255,.09);
+--border:rgba(255,255,255,.18);
+--radius:28px;
 }
 
-/* ===================== RESET ===================== */
+/* RESET */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Segoe UI,system-ui,sans-serif}
 body{
 background:
-radial-gradient(circle at 20% 10%,#0b0b2a,transparent 40%),
-radial-gradient(circle at 80% 90%,#001a2a,transparent 45%),
-linear-gradient(#05050a,#000);
+radial-gradient(circle at 20% 10%,#0b1a3a,transparent 45%),
+radial-gradient(circle at 80% 90%,#160b3a,transparent 45%),
+linear-gradient(#05070f,#000);
 color:#fff;
 overflow-x:hidden;
 }
 
-/* ===================== LOADER ===================== */
+/* CURSOR GLOW */
+.cursor{
+position:fixed;
+width:260px;height:260px;
+border-radius:50%;
+background:radial-gradient(circle,var(--accent),transparent 60%);
+pointer-events:none;
+opacity:.18;
+transform:translate(-50%,-50%);
+z-index:0;
+}
+
+/* LOADER */
 #loader{
 position:fixed;inset:0;
 background:#000;
-display:flex;flex-direction:column;
-align-items:center;justify-content:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
 z-index:9999;
-animation:fadeOut .8s ease forwards;
-animation-delay:2.6s
+animation:fadeOut .8s forwards;
+animation-delay:2.3s;
 }
 #loader img{
-width:92px;
-filter:drop-shadow(0 0 40px var(--neon));
-animation:float 2s ease-in-out infinite
+width:90px;
+filter:drop-shadow(0 0 40px var(--accent));
+animation:float 2s ease-in-out infinite;
 }
-#loader .ring{
-margin-top:30px;
-width:64px;height:64px;
+#loader span{
+margin-top:24px;
+width:70px;height:70px;
 border-radius:50%;
-border:4px solid rgba(255,255,255,.08);
-border-top-color:var(--neon);
-animation:spin 1s linear infinite
+border:4px solid rgba(255,255,255,.1);
+border-top-color:var(--accent);
+animation:spin 1s linear infinite;
 }
 
-/* ===================== NAV ===================== */
+/* NAV */
 header{
 position:fixed;top:0;width:100%;
 z-index:100;
-background:rgba(5,5,10,.6);
-backdrop-filter:var(--blur);
-border-bottom:1px solid var(--border)
+background:rgba(5,7,15,.7);
+backdrop-filter:blur(18px);
+border-bottom:1px solid var(--border);
 }
 .nav{
-max-width:1280px;margin:auto;
+max-width:1300px;
+margin:auto;
 padding:18px 26px;
-display:flex;align-items:center;justify-content:space-between
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
-.logo{
-display:flex;align-items:center;gap:12px;
-font-weight:800;letter-spacing:.4px
-}
-.logo img{
-width:36px;
-filter:drop-shadow(0 0 18px var(--neon))
-}
-nav{
-position:relative;
-display:flex;align-items:center
-}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800}
+.logo img{width:36px}
+nav{display:flex;align-items:center;position:relative}
 nav a{
 margin:0 18px;
-color:#9aa0ff;
-text-decoration:none;
+color:#aab1ff;
 cursor:pointer;
+text-decoration:none;
 font-weight:600;
-transition:.3s
+transition:.25s;
 }
-nav a:hover,nav a.active{
-color:#fff
-}
+nav a.active,nav a:hover{color:#fff}
 .nav-indicator{
 position:absolute;
 bottom:-14px;
 height:4px;
-background:linear-gradient(90deg,var(--neon),var(--neon2));
+background:linear-gradient(90deg,var(--accent),var(--accent2));
 border-radius:999px;
-transition:.4s cubic-bezier(.4,0,.2,1);
-box-shadow:0 0 25px var(--neon)
+transition:.35s;
 }
 .nav-btn{
 padding:12px 26px;
 border-radius:999px;
 font-weight:800;
-background:linear-gradient(135deg,var(--neon),var(--neon2));
+background:linear-gradient(135deg,var(--accent),var(--accent2));
 color:#000;
 text-decoration:none;
-box-shadow:0 0 30px rgba(124,124,255,.55)
 }
 #adminBtn{
 margin-left:12px;
@@ -114,196 +116,137 @@ border-radius:999px;
 border:1px solid var(--border);
 background:transparent;
 color:#fff;
-cursor:pointer
+cursor:pointer;
 }
 
-/* ===================== SECTIONS ===================== */
+/* MOBILE */
+.menu-btn{display:none;font-size:26px;cursor:pointer}
+@media(max-width:900px){
+nav{display:none}
+nav.open{display:flex;flex-direction:column;position:absolute;top:60px;right:0;background:#000;border-radius:18px;padding:16px}
+.menu-btn{display:block}
+}
+
+/* SECTIONS */
 section{
 min-height:100vh;
 padding:160px 22px 90px;
-display:none
+display:none;
 }
 section.active{
 display:block;
-animation:pageIn .7s ease forwards
+animation:sectionIn .6s ease forwards;
 }
 
-/* ===================== HERO ===================== */
-.hero{
-max-width:1150px;
-margin:auto;
-text-align:center
-}
+/* HERO */
+.hero{max-width:1200px;margin:auto;text-align:center}
 .badge{
 display:inline-block;
-padding:10px 26px;
+padding:10px 28px;
 border-radius:999px;
-background:linear-gradient(135deg,rgba(124,124,255,.18),rgba(0,234,255,.18));
-border:1px solid rgba(124,124,255,.4);
-color:#cdd1ff;
+background:rgba(108,242,255,.18);
+border:1px solid rgba(108,242,255,.4);
 font-weight:800;
-margin-bottom:30px
+margin-bottom:30px;
 }
-.hero h1{
-font-size:72px;
-line-height:1.02
-}
+.hero h1{font-size:72px;line-height:1.05}
 .hero h1 span{
-background:linear-gradient(90deg,#fff,var(--neon2));
+background:linear-gradient(90deg,#fff,var(--accent));
 -webkit-background-clip:text;
-color:transparent
+color:transparent;
 }
-.hero p{
-max-width:760px;
-margin:24px auto;
-font-size:20px;
-opacity:.9
-}
+.hero p{max-width:760px;margin:22px auto;font-size:20px;opacity:.9}
 
-/* ===================== CARDS ===================== */
-.cards{
+/* STATS */
+.stats{
 margin-top:80px;
 display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:28px;
+}
+.stat{
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:34px 26px;
+transition:.4s;
+}
+.stat:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(108,242,255,.35)}
+.stat h2{font-size:42px;font-weight:900;color:var(--accent)}
+.stat p{opacity:.85;font-weight:600}
+
+/* CARDS */
+.cards{
+margin-top:90px;
+display:grid;
 grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:28px
+gap:28px;
 }
 .card{
 background:var(--panel);
 border:1px solid var(--border);
 border-radius:var(--radius);
 padding:32px;
-backdrop-filter:var(--blur);
-transition:.45s cubic-bezier(.4,0,.2,1);
-position:relative;
-overflow:hidden
+transition:.4s;
 }
-.card::after{
-content:"";
-position:absolute;inset:0;
-background:radial-gradient(circle at top left,rgba(124,124,255,.25),transparent 60%);
-opacity:0;
-transition:.45s
-}
-.card:hover{
-transform:translateY(-10px) scale(1.03);
-box-shadow:0 30px 80px rgba(124,124,255,.35)
-}
-.card:hover::after{opacity:1}
+.card:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(123,123,255,.35)}
 
-/* ===================== REVIEWS ===================== */
-.review{
-display:flex;gap:18px;align-items:flex-start
-}
-.avatar{
-width:56px;height:56px;
-border-radius:50%;
-border:2px solid rgba(255,255,255,.25)
-}
-.review-name{
-font-weight:800;
-display:flex;gap:8px;align-items:center
-}
-.review-text{
-margin-top:6px;
-opacity:.9
-}
-.stars{
-margin-top:6px;
-color:#ffd86b
-}
-.review-img{
-margin-top:12px;
-width:100%;
-border-radius:14px;
-border:1px solid var(--border)
-}
-
-/* ===================== PRODUCTS ===================== */
-.product-img{
-width:100%;
-border-radius:16px;
-border:1px solid var(--border)
-}
-.price{
-margin-top:12px;
-font-size:20px;
-font-weight:900;
-color:#9effff
-}
-
-/* ===================== FAQ ===================== */
+/* FAQ */
 .faq-item{
 background:var(--panel);
 border:1px solid var(--border);
-border-radius:16px;
+border-radius:18px;
 padding:18px;
 margin:16px 0;
 cursor:pointer;
-transition:.3s
 }
-.faq-item:hover{transform:scale(1.02)}
-.faq-answer{
-display:none;
-margin-top:10px;
-opacity:.85
-}
+.faq-answer{display:none;margin-top:8px;opacity:.85}
 
-/* ===================== ADMIN ===================== */
+/* ADMIN */
 #adminModal{
 position:fixed;inset:0;
 background:rgba(0,0,0,.85);
 display:none;
 align-items:center;
 justify-content:center;
-z-index:9999
+z-index:9999;
 }
 #adminContent{
 background:var(--panel);
 border:1px solid var(--border);
 border-radius:var(--radius);
 padding:32px;
-width:92%;
+width:90%;
 max-width:900px;
 display:flex;
 flex-direction:column;
-gap:14px
-}
-#adminContent input,
-#adminContent textarea{
-padding:10px;
-border-radius:10px;
-border:none;
-background:#000;
-color:#fff
-}
-#adminContent button{
-padding:10px;
-border-radius:10px;
-border:none;
-background:var(--neon);
-font-weight:800;
-cursor:pointer
+gap:14px;
 }
 
-/* ===================== ANIMATIONS ===================== */
+/* ANIMATIONS */
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes float{50%{transform:translateY(-10px)}}
+@keyframes float{50%{transform:translateY(-12px)}}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
-@keyframes pageIn{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
+@keyframes sectionIn{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
 </style>
 </head>
 
 <body>
 
+<div class="cursor"></div>
+
 <div id="loader">
 <img src="assets/logo.png">
-<div class="ring"></div>
+<span></span>
 </div>
 
 <header>
 <div class="nav">
 <div class="logo"><img src="assets/logo.png"> szn tweaks</div>
-<nav>
+
+<div class="menu-btn" onclick="nav.classList.toggle('open')">☰</div>
+
+<nav id="nav">
 <a data-tab="home" class="active">Home</a>
 <a data-tab="features">Features</a>
 <a data-tab="reviews">Reviews</a>
@@ -311,16 +254,87 @@ cursor:pointer
 <a data-tab="faq">FAQ</a>
 <span class="nav-indicator"></span>
 </nav>
+
 <a class="nav-btn" href="assets/downloads/szntweaks.exe" download>Download</a>
 <button id="adminBtn">Admin</button>
 </div>
 </header>
 
-<!-- SECTIONS UNCHANGED -->
-<!-- JS UNCHANGED -->
+<section id="home" class="active">
+<div class="hero">
+<span class="badge">⚡ Extreme Windows Optimization</span>
+<h1>Push Your PC<br><span>Beyond Limits</span></h1>
+<p>Maximum FPS. Lowest latency. Professional-grade tweaks.</p>
+
+<div class="stats">
+<div class="stat"><h2 data-count="2500">0</h2><p>Fortnites Optimized</p></div>
+<div class="stat"><h2 data-count="15000">0</h2><p>Active Users</p></div>
+<div class="stat"><h2 data-count="50000">0</h2><p>Customer Reviews</p></div>
+<div class="stat"><h2 data-count="4.9">0</h2><p>User Rating</p></div>
+</div>
+</div>
+</section>
+
+<section id="features"><div class="hero"><h1>Features</h1></div></section>
+<section id="reviews"><div class="hero"><h1>Reviews</h1></div></section>
+<section id="products"><div class="hero"><h1>Products</h1></div></section>
+<section id="faq"><div class="hero"><h1>FAQ</h1>
+<div class="faq-item">Is it safe?<div class="faq-answer">Yes, fully safe.</div></div>
+</div></section>
+
+<div id="adminModal"><div id="adminContent"></div></div>
 
 <script>
-/* === SAME JS YOU ALREADY HAD — NOT TOUCHED === */
+/* CURSOR */
+const cursor=document.querySelector(".cursor");
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+/* COUNTERS */
+document.querySelectorAll("[data-count]").forEach(el=>{
+let end=+el.dataset.count;
+let cur=0;
+let step=end/80;
+let int=setInterval(()=>{
+cur+=step;
+if(cur>=end){el.innerText=end;clearInterval(int)}
+else el.innerText=Math.floor(cur);
+},20);
+});
+
+/* TABS */
+const tabs=document.querySelectorAll("[data-tab]");
+const sections=document.querySelectorAll("section");
+const indicator=document.querySelector(".nav-indicator");
+const nav=document.getElementById("nav");
+
+function moveIndicator(el){
+indicator.style.width=el.offsetWidth+"px";
+indicator.style.left=el.offsetLeft+"px";
+}
+
+tabs.forEach(t=>{
+t.onclick=()=>{
+sections.forEach(s=>s.classList.remove("active"));
+document.getElementById(t.dataset.tab).classList.add("active");
+tabs.forEach(a=>a.classList.remove("active"));
+t.classList.add("active");
+moveIndicator(t);
+nav.classList.remove("open");
+};
+});
+moveIndicator(document.querySelector("nav a.active"));
+
+/* FAQ */
+document.querySelectorAll(".faq-item").forEach(f=>{
+f.onclick=()=>f.querySelector(".faq-answer").style.display=
+f.querySelector(".faq-answer").style.display==="block"?"none":"block";
+});
+
+/* LOADER */
+window.onload=()=>setTimeout(()=>loader.remove(),2300);
 </script>
 
 </body>
