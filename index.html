@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Perfect Premium Website</title>
+<title>Premium Website</title>
 <link rel="icon" href="assets/fn.png">
 <style>
 :root{
@@ -14,8 +14,7 @@
 --border:rgba(255,255,255,.12);
 --text:#fff;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,system-ui,sans-serif;}
-body{background:radial-gradient(circle at top,#020229,transparent 45%),linear-gradient(#020202,#000);color:var(--text);overflow-x:hidden;}
+body{background:radial-gradient(circle at top,#020229,transparent 45%),linear-gradient(#020202,#000);color:var(--text);font-family:Segoe UI,sans-serif;margin:0;overflow-x:hidden;}
 
 /* LOADER */
 #loader{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;animation:fadeOut 1s forwards;animation-delay:2.5s;}
@@ -44,11 +43,11 @@ section.active{display:block}
 .hero h1 span{background:linear-gradient(90deg,#a5c9ff,var(--accent));-webkit-background-clip:text;color:transparent;}
 .hero p{max-width:720px;margin:22px auto;font-size:19px;opacity:.9;}
 
-/* PRODUCTS CARD */
-.cards{margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;}
-.card{padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:22px;transition:.3s;cursor:pointer;}
-.card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 0 40px rgba(59,130,246,.35);}
-.product-img{width:100%;border-radius:14px;border:1px solid var(--border);}
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;}
+.card{background:var(--panel);padding:20px;border-radius:20px;border:1px solid var(--border);cursor:pointer;transition:0.3s;}
+.card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 0 25px rgba(59,130,246,.35);}
+.product-img{width:100%;border-radius:14px;}
 
 /* REVIEWS */
 .review{display:flex;gap:16px;align-items:flex-start;}
@@ -59,17 +58,20 @@ section.active{display:block}
 .stars{color:#60a5fa;font-size:14px;margin-top:4px;}
 
 /* PRODUCT PANEL */
-#productPanel{position:fixed;top:0;right:-100%;width:100%;max-width:900px;height:100%;background:var(--secondary);z-index:10000;display:flex;transition:0.5s;box-shadow:-5px 0 25px rgba(0,0,0,.6);}
+#productPanel{position:fixed;top:0;right:-100%;width:100%;max-width:900px;height:100%;background:var(--panel);z-index:1000;display:flex;transition:0.5s;box-shadow:-5px 0 25px rgba(0,0,0,.6);}
 #productPanel.active{right:0;}
 #productPanel .panel-left,.panel-right{flex:1;padding:40px;overflow:auto;}
 #productPanel .panel-left img{width:100%;border-radius:20px;}
 #productPanel .panel-right h2{font-size:2rem;margin-bottom:20px;}
-#productPanel .panel-right .license-options button{width:100%;margin:10px 0;padding:12px;border:none;border-radius:12px;cursor:pointer;background:var(--panel);color:#fff;font-weight:600;transition:0.3s;}
-#productPanel .panel-right .license-options button:hover{background:var(--accent);}
-#productPanel .panel-right label{margin:15px 0;display:block;}
-#productPanel .panel-right .add-cart{display:flex;gap:20px;margin-top:20px;}
-#productPanel .panel-right .add-cart button{padding:12px 25px;border:none;border-radius:12px;cursor:pointer;font-weight:700;background:var(--accent);color:#fff;transition:0.3s;}
-#productPanel .panel-right .add-cart button:hover{opacity:0.85;}
+.license-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:15px;}
+.license-card{padding:15px;border-radius:12px;border:1px solid var(--border);background:var(--bg);cursor:pointer;transition:0.3s;display:flex;justify-content:space-between;align-items:center;}
+.license-card.active{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:none;box-shadow:0 0 15px rgba(59,130,246,.4);}
+.license-card:hover{background:rgba(59,130,246,.15);}
+.quantity{margin:15px 0;display:flex;align-items:center;gap:10px;}
+.quantity input{width:60px;text-align:center;padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:#fff;}
+.add-cart{display:flex;gap:20px;margin-top:20px;}
+.add-cart button{flex:1;padding:12px 25px;border:none;border-radius:12px;font-weight:700;background:var(--accent);color:#fff;cursor:pointer;transition:0.3s;}
+.add-cart button:hover{opacity:0.85;}
 #productPanel .close-btn{position:absolute;top:20px;right:20px;font-size:2rem;cursor:pointer;color:#fff;transition:0.3s;}
 #productPanel .close-btn:hover{color:var(--accent);}
 
@@ -132,25 +134,30 @@ section.active{display:block}
 <!-- PRODUCT PANEL -->
 <div id="productPanel">
 <div class="close-btn" onclick="closeProductPanel()">×</div>
-<div class="panel-left"><img src="assets/fn.png"></div>
+<div class="panel-left">
+<img src="assets/fn.png" alt="Product">
+</div>
 <div class="panel-right">
 <h2>Select License</h2>
-<div class="license-options">
-<button>1 DAY LICENSE</button>
-<button>7 DAY LICENSE</button>
-<button>30 DAY LICENSE</button>
-<button>LIFETIME LICENSE</button>
+<div class="license-cards">
+<div class="license-card" onclick="selectLicense(this)">1 DAY LICENSE</div>
+<div class="license-card" onclick="selectLicense(this)">7 DAY LICENSE</div>
+<div class="license-card" onclick="selectLicense(this)">30 DAY LICENSE</div>
+<div class="license-card" onclick="selectLicense(this)">LIFETIME LICENSE</div>
 </div>
-<label>Quantity: <input type="number" min="1" value="1"></label>
+<div class="quantity">
+<label>Quantity:</label>
+<input type="number" min="1" value="1" id="quantityInput">
+</div>
 <div class="add-cart">
-<button>Add To Cart</button>
-<button>CheckOut</button>
+<button onclick="addToCart()">Add To Cart</button>
+<button onclick="checkout()">CheckOut</button>
 </div>
 </div>
 </div>
 
 <script>
-/* NAV + TABS + INDICATOR */
+/* NAV + TABS */
 const tabs=document.querySelectorAll("[data-tab]");
 const sections=document.querySelectorAll("section");
 const indicator=document.querySelector(".nav-indicator");
@@ -159,10 +166,26 @@ tabs.forEach(t=>{t.onclick=()=>{sections.forEach(s=>s.classList.remove("active")
 moveIndicator(document.querySelector("nav a.active"));
 
 /* PRODUCT PANEL */
+let selectedLicense=null;
 function openProductPanel(){document.getElementById('productPanel').classList.add('active');}
 function closeProductPanel(){document.getElementById('productPanel').classList.remove('active');}
+function selectLicense(el){
+document.querySelectorAll('.license-card').forEach(c=>c.classList.remove('active'));
+el.classList.add('active');
+selectedLicense=el.innerText;
+}
+function addToCart(){
+if(!selectedLicense){alert("Please select a license");return;}
+const qty=document.getElementById('quantityInput').value;
+alert(`Added ${qty} x ${selectedLicense} to cart!`);
+}
+function checkout(){
+if(!selectedLicense){alert("Please select a license");return;}
+const qty=document.getElementById('quantityInput').value;
+alert(`Proceeding to checkout for ${qty} x ${selectedLicense}`);
+}
 
-/* REVIEWS DATA */
+/* REVIEWS */
 let reviewsData=[
 {name:"User1",avatar:"assets/review1.png",text:"Amazing service!",stars:5,verified:true},
 {name:"User2",avatar:"assets/review1.png",text:"Highly recommend!",stars:5,verified:true}
