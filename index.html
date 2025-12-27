@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Website</title>
+<title>Premium Website - Checkout</title>
 <link rel="icon" href="assets/fn.png">
 <style>
 :root{
@@ -13,6 +13,7 @@
 --panel:rgba(255,255,255,.06);
 --border:rgba(255,255,255,.12);
 --text:#fff;
+--success:#22c55e;
 }
 body{background:radial-gradient(circle at top,#020229,transparent 45%),linear-gradient(#020202,#000);color:var(--text);font-family:Segoe UI,sans-serif;margin:0;overflow-x:hidden;}
 
@@ -75,6 +76,14 @@ section.active{display:block}
 #productPanel .close-btn{position:absolute;top:20px;right:20px;font-size:2rem;cursor:pointer;color:#fff;transition:0.3s;}
 #productPanel .close-btn:hover{color:var(--accent);}
 
+/* INVOICE */
+#invoiceModal{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:2000;}
+#invoiceContent{background:var(--panel);padding:30px;border-radius:22px;width:90%;max-width:500px;text-align:center;}
+#invoiceContent h2{margin-bottom:20px;}
+#invoiceContent p{margin:8px 0;font-weight:600;}
+#invoiceContent .key{margin-top:15px;font-size:18px;color:var(--success);}
+#invoiceContent button{margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:var(--accent);color:#fff;cursor:pointer;}
+
 /* ANIMATIONS */
 @keyframes fadeInUp{from{opacity:0;transform:translateY(25px)}to{opacity:1}}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
@@ -99,7 +108,6 @@ section.active{display:block}
 </div>
 </header>
 
-<!-- HOME -->
 <section id="home" class="active">
 <div class="hero">
 <span class="badge">⚡ Customers: 2k+</span>
@@ -108,7 +116,6 @@ section.active{display:block}
 </div>
 </section>
 
-<!-- PRODUCTS -->
 <section id="products">
 <div class="hero">
 <span class="badge">🛒 Products</span>
@@ -122,7 +129,6 @@ section.active{display:block}
 </div>
 </section>
 
-<!-- REVIEWS -->
 <section id="reviews">
 <div class="hero">
 <span class="badge">⭐ Reviews</span>
@@ -131,7 +137,6 @@ section.active{display:block}
 </div>
 </section>
 
-<!-- PRODUCT PANEL -->
 <div id="productPanel">
 <div class="close-btn" onclick="closeProductPanel()">×</div>
 <div class="panel-left">
@@ -150,9 +155,17 @@ section.active{display:block}
 <input type="number" min="1" value="1" id="quantityInput">
 </div>
 <div class="add-cart">
-<button onclick="addToCart()">Add To Cart</button>
 <button onclick="checkout()">CheckOut</button>
 </div>
+</div>
+</div>
+
+<div id="invoiceModal">
+<div id="invoiceContent">
+<h2>Processing Checkout...</h2>
+<p id="invoiceDetails"></p>
+<p class="key" id="licenseKey"></p>
+<button onclick="closeInvoice()">Close</button>
 </div>
 </div>
 
@@ -169,46 +182,32 @@ moveIndicator(document.querySelector("nav a.active"));
 let selectedLicense=null;
 function openProductPanel(){document.getElementById('productPanel').classList.add('active');}
 function closeProductPanel(){document.getElementById('productPanel').classList.remove('active');}
-function selectLicense(el){
-document.querySelectorAll('.license-card').forEach(c=>c.classList.remove('active'));
-el.classList.add('active');
-selectedLicense=el.innerText;
-}
-function addToCart(){
-if(!selectedLicense){alert("Please select a license");return;}
-const qty=document.getElementById('quantityInput').value;
-alert(`Added ${qty} x ${selectedLicense} to cart!`);
-}
+function selectLicense(el){document.querySelectorAll('.license-card').forEach(c=>c.classList.remove('active'));el.classList.add('active');selectedLicense=el.innerText;}
+
+/* CHECKOUT & INVOICE */
+function generateKey(){return 'XXXX-XXXX-XXXX-XXXX'.replace(/X/g,()=>Math.floor(Math.random()*10));}
 function checkout(){
-if(!selectedLicense){alert("Please select a license");return;}
+if(!selectedLicense){alert("Select a license!");return;}
 const qty=document.getElementById('quantityInput').value;
-alert(`Proceeding to checkout for ${qty} x ${selectedLicense}`);
+const invoice=document.getElementById('invoiceDetails');
+const keyElem=document.getElementById('licenseKey');
+document.getElementById('invoiceModal').style.display='flex';
+invoice.innerText=`${qty} x ${selectedLicense}`;
+keyElem.innerText='Processing...';
+setTimeout(()=>{keyElem.innerText=`License Key: ${generateKey()}`},2000);
 }
 
+/* CLOSE INVOICE */
+function closeInvoice(){document.getElementById('invoiceModal').style.display='none';}
+
 /* REVIEWS */
-let reviewsData=[
-{name:"User1",avatar:"assets/review1.png",text:"Amazing service!",stars:5,verified:true},
-{name:"User2",avatar:"assets/review1.png",text:"Highly recommend!",stars:5,verified:true}
-];
-function renderReviews(){
-const rc=document.getElementById("reviewsContainer");
-rc.innerHTML="";
-reviewsData.forEach(r=>{
-rc.innerHTML+=`
-<div class="card review">
-<img src="${r.avatar}" class="avatar">
-<div>
-<div class="review-name">${r.name}${r.verified?'<img src="assets/tick.png" class="verified">':''}</div>
-<div class="stars">${"⭐".repeat(r.stars)}</div>
-<div class="review-text">${r.text}</div>
-</div>
-</div>`;
-});
-}
+let reviewsData=[{name:"User1",avatar:"assets/review1.png",text:"Amazing service!",stars:5,verified:true},{name:"User2",avatar:"assets/review1.png",text:"Highly recommend!",stars:5,verified:true}];
+function renderReviews(){const rc=document.getElementById("reviewsContainer");rc.innerHTML="";reviewsData.forEach(r=>{rc.innerHTML+=`<div class="card review"><img src="${r.avatar}" class="avatar"><div><div class="review-name">${r.name}${r.verified?'<img src="assets/tick.png" class="verified">':''}</div><div class="stars">${"⭐".repeat(r.stars)}</div><div class="review-text">${r.text}</div></div></div>`;});}
 renderReviews();
 
 /* LOADER */
 window.onload=()=>setTimeout(()=>document.getElementById("loader").remove(),2500);
 </script>
+
 </body>
 </html>
